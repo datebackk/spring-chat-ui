@@ -1,0 +1,40 @@
+.nav {
+  display: flex;
+  background-color: #29242a;
+  min-height: 100%;
+  padding: 20px 30px;
+  align-items: center;
+  justify-content: center;
+
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      margin-top: 40px;
+    }
+  }
+
+
+  &__mdi {
+    color: #aab0b7;
+    font-size: 28px;
+  }
+
+  @media (max-width: 1200px) {
+    flex-direction: row;
+    width: 100%;
+    min-height: 0;
+    padding: 8px 20px;
+
+    &__menu {
+      flex-direction: row;
+
+      button {
+        margin-top: 0;
+        margin-right: 40px;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+}
+
+@media (max-width: 1200px) {
+  .pages {
+    min-width: 100%;
+  }
+
+  .view {
+    display: none;
+  }
+
+  .wrapper {
+    flex-direction: column-reverse;
+  }
+}

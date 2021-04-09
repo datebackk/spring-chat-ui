@@ -66,6 +66,17 @@ export function getUsers() {
   });
 }
 
+export function getUserChats(userId) {
+  if (!localStorage.getItem("accessToken")) {
+    return Promise.reject("No access token set.");
+  }
+
+  return request({
+    url: CHAT_SERVICE + "/chats/" + userId,
+    method: "GET",
+  });
+}
+
 export function countNewMessages(senderId, recipientId) {
   if (!localStorage.getItem("accessToken")) {
     return Promise.reject("No access token set.");

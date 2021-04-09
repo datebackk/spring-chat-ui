@@ -1,0 +1,28 @@
+.pages {
+  min-width: 420px;
+  height: 100%;
+  background-color: #2F2A30;
+  overflow-y: scroll;
+}
+
+.page {
+  display: block;
+
+  &--active {
+    display: block;
+  }
+
+  &__content {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  &__title {
+    color: #ffffff;
+    font-size: 26px;
+    font-family: "Gilroy";
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+}
