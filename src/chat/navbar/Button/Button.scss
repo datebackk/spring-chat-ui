@@ -1,7 +1,26 @@
-.tab-trigger {
-  &__light {
+.nav__menu {
+  .tab-trigger {
+    cursor: pointer;
+    background-color: transparent;
+    margin-top: 40px;
+    border: none;
+
     .mdi {
-      color: red;
+      color: #aab0b7;
+      font-size: 28px;
+      &--active {
+        color: #0176ff;
+      }
+    }
+
+    :hover {
+      color: #0176ff;
+    }
+
+    @media (max-width: 1200px) {
+      background-color: transparent;
+      margin-top: 0;
+      margin-right: 40px;
     }
   }
 }

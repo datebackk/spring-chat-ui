@@ -6,20 +6,9 @@
   align-items: center;
   justify-content: center;
 
-
   &__menu {
     display: flex;
     flex-direction: column;
-
-    button {
-      margin-top: 40px;
-    }
-  }
-
-
-  &__mdi {
-    color: #aab0b7;
-    font-size: 28px;
   }
 
   @media (max-width: 1200px) {
@@ -30,11 +19,6 @@
 
     &__menu {
       flex-direction: row;
-
-      button {
-        margin-top: 0;
-        margin-right: 40px;
-      }
     }
   }
 }
