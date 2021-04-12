@@ -11,8 +11,9 @@ export const loggedInUser = atom({
 export const navBar = atom({
   key: "navBar",
   default: {
-    "chats": true,
-    "users": false
+    chats: {name: "chats", isActive: true},
+    users: {name: "users", isActive: false},
+    users_add: {name: "users_add", isActive: false}
   },
   persistence_UNSTABLE: {
     type: "navBar",

@@ -1,22 +1,24 @@
 import React from "react";
 import "./Navbar.scss"
-import {useRecoilState} from "recoil";
-import {navBar} from "../../atom/globalState";
-import Button from "./Button/Button";
+import Button from "./button/Button";
+import PropTypes, {object} from "prop-types";
 
-const Navbar = (props) => {
-
-    const [currentActiveTab, setActiveTab] = useRecoilState(navBar);
-
+const Navbar = ({tabs, switchTab}) => {
+    console.log(tabs);
     return (
         <section className="nav">
             <div className="nav__menu">
-                <Button icon={"mdi-account-outline"} isActive={false}/>
-                <Button icon={"mdi-comment-outline"} isActive={true}/>
-                <Button icon={"mdi-account-multiple-plus-outline"} isActive={false}/>
+                <Button icon={"mdi-account-outline"} tab={tabs.users} switchTab={switchTab}/>
+                <Button icon={"mdi-comment-outline"} tab={tabs.chats} switchTab={switchTab}/>
+                <Button icon={"mdi-account-multiple-plus-outline"} tab={tabs.users_add} switchTab={switchTab}/>
             </div>
         </section>
     );
+}
+
+Navbar.prototype = {
+    tabs: PropTypes.object.isRequired,
+    switchTab: PropTypes.func.isRequired
 }
 
 export default Navbar;

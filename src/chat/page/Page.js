@@ -1,27 +1,25 @@
 import React from "react";
 import "./Page.scss"
-import {BrowserRouter, Route, Switch} from "react-router-dom";
-import Chat from "../Chat";
-import Signin from "../../signin/Signin";
-import Signup from "../../signup/Signup";
 import Chats from "./chats/Chats";
+import PropTypes, {object} from "prop-types";
+import Users from "./users/Users";
 
-const Page = (props) => {
+const Page = ({activeTab}) => {
     return (
         <section className="pages">
             <div className="page">
                 <div className="page__content">
-                    <Chats dialog={[
-                        {
-                            name: 1
-                        },
-                        {
-                            name: 2
-                        }
-                    ]}/>
+                    {activeTab.users.isActive ? <Users/> : null}
+                    {activeTab.chats.isActive ? <Chats dialog={[{name: 1}, {name: 2}]}/> : null}
+                    {activeTab.users_add.isActive ? null: null}
                 </div>
             </div>
         </section>
     );
 };
+
+Page.prototype = {
+    activeTab: PropTypes.object.isRequired
+}
+
 export default Page;
