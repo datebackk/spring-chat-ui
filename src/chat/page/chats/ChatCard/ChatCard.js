@@ -1,18 +1,28 @@
 import React from "react";
 import "./ChatCard.scss"
+import PropTypes, {object} from "prop-types";
 
 
-const ChatCard = ({name, openDialog}) => {
+const ChatCard = ({currentUser, cardDetails, openDialog}) => {
+
+    let title;
+    if (cardDetails.sender.id === currentUser.id) {
+        title = <h6>{cardDetails.recipient.nickname}</h6>
+    } else {
+        title = <h6>{cardDetails.sender.nickname}</h6>
+    }
+
+
     return (
-        <div className="chat-card" onClick={() => openDialog(name)}>
+        <div className="chat-card" onClick={() => openDialog(1)}>
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
-                        <img className="chat-card__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
+                        <img className="chat-card__avatar-img" src="../../../../assets/img/avatar.jpg" alt="avatar"/>
                     </div>
                     <div className="chat-card__media">
                         <div className="chat-card__title">
-                            <h6>{name}</h6>
+                            {title}
                             <p>10:20 am</p>
                         </div>
                         <div className="chat-card__text">
@@ -25,8 +35,10 @@ const ChatCard = ({name, openDialog}) => {
     );
 };
 
-
-
-
+ChatCard.prototype = {
+    currentUser: PropTypes.object.isRequired,
+    cardDetails: PropTypes.object.isRequired,
+    openDialog: PropTypes.func.isRequired
+}
 
 export default ChatCard;

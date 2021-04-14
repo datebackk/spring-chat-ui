@@ -27,3 +27,20 @@ export const opendDialog = atom({
     type: "opendDialog",
   },
 });
+
+
+export const chats = atom({
+  key: "chats",
+  default: {},
+  persistence_UNSTABLE: {
+    type: "chats",
+  },
+});
+
+export const chatMessages = atom({
+  key: "chatMessages",
+  default: [{}],
+  persistence_UNSTABLE: {
+    type: "chatMessages",
+  },
+});

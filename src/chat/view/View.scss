@@ -63,32 +63,5 @@
     flex: 0 0 auto;
     padding: 10px 0 20px 0;
     border-top: 1px solid rgba(47,42,48,.85)!important;
-
-    &__form-group {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      button {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        background-color: #0176ff;
-        border-color: #0176ff;
-      }
-
-      textarea {
-        overflow: hidden;
-        overflow-wrap: break-word;
-        resize: none;
-        background: transparent;
-        color: #a7a7a7;
-        font-size: 15px;
-        width: 100%;
-        padding: 11px 17px;
-        height: 46px;
-        line-height: 1.6;
-      }
-    }
   }
 }

@@ -56,8 +56,8 @@ const Chat = (props) => {
     return (
         <section className="wrapper">
             <Navbar tabs={tabs} switchTab={switchTab}/>
-            <Page activeTab={tabs} openDialog={openDialog}/>
-            <View currentDialog={currentDialog}/>
+            <Page activeTab={tabs} currentUser={currentUser} openDialog={openDialog}/>
+            <View currentUser={currentUser} currentDialog={currentDialog}/>
         </section>
     );
 };

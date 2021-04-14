@@ -1,8 +1,30 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./View.scss"
 import Message from "./message/Message";
+import PropTypes from "prop-types";
+import MessageForm from "./MessageFrom/MessageForm";
+import {useRecoilState} from "recoil";
+import {chatMessages} from "../../atom/globalState";
+import {getChatMessages} from "../../util/ApiUtil";
 
-const View = ({currentDialog}) => {
+const View = ({currentUser, currentDialog}) => {
+
+    const [currentChatMessages, setMessages] = useRecoilState(chatMessages)
+
+    useEffect(() => {
+        loadChatMessages();
+    }, []);
+
+    const loadChatMessages = () => {
+        getChatMessages(currentDialog.name)
+            .then((response) => {
+                setMessages(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     return (
         <section className="view">
             <div className="chat">
@@ -19,19 +41,21 @@ const View = ({currentDialog}) => {
                     </div>
 
                     <div className="chat__messages container">
-                        <Message/>
+                        {currentChatMessages.map((item, key) => <Message currentUser={currentUser} messageDetails={item}/>)}
                     </div>
-                    <div className="chat__footer container">
-                        <form className="chat__footer__form-group">
-                            <textarea placeholder="Наберите свое сообщение..."></textarea>
 
-                            <button type="submit"><i className="mdi mdi-send"></i></button>
-                        </form>
+                    <div className="chat__footer container">
+                        <MessageForm currentDialog={currentDialog}/>
                     </div>
                 </div>
             </div>
         </section>
     )
+}
+
+View.prototype = {
+    currentUser: PropTypes.object.isRequired,
+    currentDialog: PropTypes.object.isRequired
 }
 
 export default View;

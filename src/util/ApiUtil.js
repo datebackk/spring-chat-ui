@@ -66,13 +66,35 @@ export function getUsers() {
   });
 }
 
-export function getUserChats(userId) {
+export function getUserChats() {
   if (!localStorage.getItem("accessToken")) {
     return Promise.reject("No access token set.");
   }
 
   return request({
-    url: CHAT_SERVICE + "/chats/" + userId,
+    url: CHAT_SERVICE + "/chats",
+    method: "GET",
+  });
+}
+
+export function sendNewMessage() {
+  if (!localStorage.getItem("accessToken")) {
+    return Promise.reject("No access token set.");
+  }
+
+  return request({
+    url: CHAT_SERVICE + "/message",
+    method: "POST",
+  });
+}
+
+export function getChatMessages(chatId) {
+  if (!localStorage.getItem("accessToken")) {
+    return Promise.reject("No access token set.");
+  }
+
+  return request({
+    url: CHAT_SERVICE + "/message/" + chatId,
     method: "GET",
   });
 }

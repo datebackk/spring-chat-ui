@@ -1,10 +1,18 @@
 import React from "react";
 import "./Message.scss"
+import PropTypes from "prop-types";
 
 
-const Message = (pops) => {
+const Message = ({currentUser, messageDetails}) => {
+
+    let messageClass = ['message'];
+    console.log(messageDetails.senderId, currentUser.id);
+    if (messageDetails.senderId === currentUser.id) {
+        messageClass.push('message--right');
+    }
+
     return (
-        <div className="message">
+        <div className={messageClass.join(' ')}>
             <a className="message__avatar" href="#">
                 <img className="message__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
             </a>
@@ -13,8 +21,7 @@ const Message = (pops) => {
                 <div className="message__row">
                     <div className="message__card">
                         <div className="message__content">
-                            Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey!
-                            Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey! Hey!
+                            {messageDetails.message}
                         </div>
                         <div className="message__time">
                             8 min ago
@@ -24,6 +31,11 @@ const Message = (pops) => {
             </div>
         </div>
     )
+}
+
+Message.prototype = {
+    currentUser: PropTypes.object.isRequired,
+    currentDialog: PropTypes.object.isRequired
 }
 
 export default Message;
