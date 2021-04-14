@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {loggedInUser, navBar} from "../atom/globalState";
+import {opendDialog} from "../atom/globalState";
 import {useRecoilState} from "recoil";
 import {getCurrentUser} from "../util/ApiUtil";
 import "./Chat.scss"
@@ -10,6 +11,7 @@ import View from "./view/View";
 const Chat = (props) => {
 
     const [currentUser, setLoggedInUser] = useRecoilState(loggedInUser);
+    const [currentDialog, setCurrentDialog] = useRecoilState(opendDialog);
     const [tabs, setActiveTab] = useRecoilState(navBar);
 
     useEffect(() => {
@@ -35,29 +37,27 @@ const Chat = (props) => {
         props.history.push("/login");
     };
 
-    function switchTab(tabName) {
-        // setActiveTab(
-        //     Object.values(tabs).map(tab => {
-        //     if (tab.isActive || tab.name === key) {
-        //         tab.isActive = !tab.isActive;
-        //     }
-        //     return tab;
-        //     })
-        // );
-        let b = Object.keys(tabs).map(key => {
-            if (tabs[key].isActive || tabName === key) {
-                tabs[key].isActive = !tabs[key].isActive;
+    const switchTab = (tabName) => {
+        let newTabs = JSON.parse(JSON.stringify(tabs));
+        for (const key in newTabs) {
+            console.log(newTabs[key]);
+            if (newTabs[key].isActive || tabName === key) {
+                newTabs[key].isActive = !newTabs[key].isActive;
             }
-            return tabs[key];
-        })
-        console.log(Object.keys(b));
+
+        }
+        return  setActiveTab(newTabs);
+    }
+
+    const openDialog = (name) => {
+        setCurrentDialog({name: name});
     }
 
     return (
         <section className="wrapper">
             <Navbar tabs={tabs} switchTab={switchTab}/>
-            <Page activeTab={tabs}/>
-            <View/>
+            <Page activeTab={tabs} openDialog={openDialog}/>
+            <View currentDialog={currentDialog}/>
         </section>
     );
 };

@@ -2,9 +2,9 @@ import React from "react";
 import "./ChatCard.scss"
 
 
-const ChatCard = (props) => {
+const ChatCard = ({name, openDialog}) => {
     return (
-        <div className="chat-card">
+        <div className="chat-card" onClick={() => openDialog(name)}>
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
@@ -12,7 +12,7 @@ const ChatCard = (props) => {
                     </div>
                     <div className="chat-card__media">
                         <div className="chat-card__title">
-                            <h6>{props.name}</h6>
+                            <h6>{name}</h6>
                             <p>10:20 am</p>
                         </div>
                         <div className="chat-card__text">
@@ -22,6 +22,11 @@ const ChatCard = (props) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
+
+
+
+
 export default ChatCard;

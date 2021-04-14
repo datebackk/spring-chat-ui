@@ -4,7 +4,6 @@ import Button from "./button/Button";
 import PropTypes, {object} from "prop-types";
 
 const Navbar = ({tabs, switchTab}) => {
-    console.log(tabs);
     return (
         <section className="nav">
             <div className="nav__menu">

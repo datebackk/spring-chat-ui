@@ -11,11 +11,19 @@ export const loggedInUser = atom({
 export const navBar = atom({
   key: "navBar",
   default: {
-    chats: {name: "chats", isActive: true},
     users: {name: "users", isActive: false},
+    chats: {name: "chats", isActive: true},
     users_add: {name: "users_add", isActive: false}
   },
   persistence_UNSTABLE: {
     type: "navBar",
+  },
+});
+
+export const opendDialog = atom({
+  key: "opendDialog",
+  default: {},
+  persistence_UNSTABLE: {
+    type: "opendDialog",
   },
 });
