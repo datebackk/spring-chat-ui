@@ -20,18 +20,18 @@ export const navBar = atom({
   },
 });
 
-export const opendDialog = atom({
-  key: "opendDialog",
+export const openedDialog = atom({
+  key: "openedDialog",
   default: {},
   persistence_UNSTABLE: {
-    type: "opendDialog",
+    type: "openedDialog",
   },
 });
 
 
 export const chats = atom({
   key: "chats",
-  default: {},
+  default: [{}],
   persistence_UNSTABLE: {
     type: "chats",
   },

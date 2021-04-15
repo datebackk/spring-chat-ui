@@ -9,20 +9,28 @@ import {getChatMessages} from "../../util/ApiUtil";
 
 const View = ({currentUser, currentDialog}) => {
 
-    const [currentChatMessages, setMessages] = useRecoilState(chatMessages)
+    const [currentChatMessages, setMessages] = useRecoilState(chatMessages);
 
     useEffect(() => {
         loadChatMessages();
-    }, []);
+    }, [currentDialog]);
 
     const loadChatMessages = () => {
-        getChatMessages(currentDialog.name)
+        getChatMessages(currentDialog.details.chatId)
             .then((response) => {
                 setMessages(response);
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    let title;
+    console.log(currentDialog);
+    if (currentDialog.details.sender.id === currentUser.id) {
+        title = <h6>{currentDialog.details.recipient.nickname}</h6>
+    } else {
+        title = <h6>{currentDialog.details.sender.nickname}</h6>
     }
 
     return (
@@ -35,13 +43,13 @@ const View = ({currentUser, currentDialog}) => {
                             <img className="chat__header__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
                         </div>
                         <div className="chat__header__info">
-                            <h6>{currentDialog.name}</h6>
+                            {title}
                             <p>online</p>
                         </div>
                     </div>
 
                     <div className="chat__messages container">
-                        {currentChatMessages.map((item, key) => <Message currentUser={currentUser} messageDetails={item}/>)}
+                        {currentChatMessages.map((item, key) => <Message key={key} currentUser={currentUser} messageDetails={item}/>)}
                     </div>
 
                     <div className="chat__footer container">

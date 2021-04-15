@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import {loggedInUser, navBar} from "../atom/globalState";
-import {opendDialog} from "../atom/globalState";
+import {openedDialog} from "../atom/globalState";
 import {useRecoilState} from "recoil";
 import {getCurrentUser} from "../util/ApiUtil";
 import "./Chat.scss"
@@ -11,7 +11,7 @@ import View from "./view/View";
 const Chat = (props) => {
 
     const [currentUser, setLoggedInUser] = useRecoilState(loggedInUser);
-    const [currentDialog, setCurrentDialog] = useRecoilState(opendDialog);
+    const [currentDialog, setCurrentDialog] = useRecoilState(openedDialog);
     const [tabs, setActiveTab] = useRecoilState(navBar);
 
     useEffect(() => {
@@ -49,8 +49,8 @@ const Chat = (props) => {
         return  setActiveTab(newTabs);
     }
 
-    const openDialog = (name) => {
-        setCurrentDialog({name: name});
+    const openDialog = (details) => {
+        setCurrentDialog({details: details});
     }
 
     return (

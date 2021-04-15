@@ -14,7 +14,7 @@ const ChatCard = ({currentUser, cardDetails, openDialog}) => {
 
 
     return (
-        <div className="chat-card" onClick={() => openDialog(1)}>
+        <div className="chat-card" onClick={() => openDialog(cardDetails)}>
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Page.scss"
 import Chats from "./chats/Chats";
-import PropTypes, {object} from "prop-types";
+import PropTypes from "prop-types";
 import Users from "./users/Users";
 
 const Page = ({currentUser, activeTab, openDialog}) => {
