@@ -1,12 +1,14 @@
 import React from "react";
 import "./MessageFrom.scss"
-import PropTypes from "prop-types";
 import {useForm} from "react-hook-form";
 import {sendNewMessage} from "../../../util/ApiUtil";
+import {useSelector} from "react-redux";
 
-const MessageForm = ({currentUser, currentDialog}) => {
+const MessageForm = (props) => {
 
     const { register, handleSubmit, errors } = useForm();
+    const currentDialog = useSelector(state => state.view);
+    const currentUser = useSelector(state => state.currentUser);
 
     const sendMessage = message => {
         const newMessage = {
@@ -25,11 +27,6 @@ const MessageForm = ({currentUser, currentDialog}) => {
             <button type="submit"><i className="mdi mdi-send"/></button>
         </form>
     )
-}
-
-MessageForm.prototype = {
-    currentUser: PropTypes.object.isRequired,
-    currentDialog: PropTypes.object.isRequired
 }
 
 export default MessageForm;

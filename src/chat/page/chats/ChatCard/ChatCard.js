@@ -1,9 +1,14 @@
 import React from "react";
 import "./ChatCard.scss"
-import PropTypes, {object} from "prop-types";
+import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {openDialog} from "../../../../store/view/actions";
 
 
-const ChatCard = ({currentUser, cardDetails, openDialog}) => {
+const ChatCard = ({cardDetails}) => {
+
+    const currentUser = useSelector(state => state.currentUser);
+    const viewDispatch = useDispatch();
 
     let title;
     if (cardDetails.sender.id === currentUser.id) {
@@ -14,7 +19,7 @@ const ChatCard = ({currentUser, cardDetails, openDialog}) => {
 
 
     return (
-        <div className="chat-card" onClick={() => openDialog(cardDetails)}>
+        <div className="chat-card" onClick={() => viewDispatch(openDialog(cardDetails))}>
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
@@ -36,9 +41,7 @@ const ChatCard = ({currentUser, cardDetails, openDialog}) => {
 };
 
 ChatCard.prototype = {
-    currentUser: PropTypes.object.isRequired,
-    cardDetails: PropTypes.object.isRequired,
-    openDialog: PropTypes.func.isRequired
+    cardDetails: PropTypes.object.isRequired
 }
 
 export default ChatCard;

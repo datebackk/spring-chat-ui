@@ -1,27 +1,24 @@
 import React from "react";
 import "./Page.scss"
 import Chats from "./chats/Chats";
-import PropTypes from "prop-types";
 import Users from "./users/Users";
+import {useSelector} from "react-redux";
 
-const Page = ({currentUser, activeTab, openDialog}) => {
+const Page = (props) => {
+
+    const activeTab = useSelector(state => state.navbar);
+
     return (
         <section className="pages">
             <div className="page">
                 <div className="page__content">
                     {activeTab.users.isActive ? <Users/> : null}
-                    {activeTab.chats.isActive ? <Chats currentUser={currentUser} openDialog={openDialog}/> : null}
+                    {activeTab.chats.isActive ? <Chats/> : null}
                     {activeTab.users_add.isActive ? null: null}
                 </div>
             </div>
         </section>
     );
 };
-
-Page.prototype = {
-    currentUser: PropTypes.object.isRequired,
-    activeTab: PropTypes.object.isRequired,
-    openDialog: PropTypes.func.isRequired
-}
 
 export default Page;

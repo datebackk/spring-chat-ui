@@ -1,15 +1,18 @@
 import React, {useEffect} from "react";
 import "./View.scss"
 import Message from "./message/Message";
-import PropTypes from "prop-types";
 import MessageForm from "./MessageFrom/MessageForm";
-import {useRecoilState} from "recoil";
-import {chatMessages} from "../../atom/globalState";
 import {getChatMessages} from "../../util/ApiUtil";
+import Header from "./header/Header";
+import {useDispatch, useSelector} from "react-redux";
+import {setMessages} from "../../store/page/chats/messages/actions";
 
-const View = ({currentUser, currentDialog}) => {
+const View = (props) => {
 
-    const [currentChatMessages, setMessages] = useRecoilState(chatMessages);
+    const currentDialogMessages = useSelector(state => state.currentDialogMessages);
+    const currentDialogMessagesDispatcher = useDispatch();
+
+    const currentDialog = useSelector(state => state.view);
 
     useEffect(() => {
         loadChatMessages();
@@ -18,19 +21,11 @@ const View = ({currentUser, currentDialog}) => {
     const loadChatMessages = () => {
         getChatMessages(currentDialog.details.chatId)
             .then((response) => {
-                setMessages(response);
+                currentDialogMessagesDispatcher(setMessages(response));
             })
             .catch((error) => {
                 console.log(error);
             });
-    }
-
-    let title;
-    console.log(currentDialog);
-    if (currentDialog.details.sender.id === currentUser.id) {
-        title = <h6>{currentDialog.details.recipient.nickname}</h6>
-    } else {
-        title = <h6>{currentDialog.details.sender.nickname}</h6>
     }
 
     return (
@@ -38,32 +33,19 @@ const View = ({currentUser, currentDialog}) => {
             <div className="chat">
                 <div className="chat__content">
 
-                    <div className="chat__header container">
-                        <div className="chat__header__avatar">
-                            <img className="chat__header__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
-                        </div>
-                        <div className="chat__header__info">
-                            {title}
-                            <p>online</p>
-                        </div>
-                    </div>
+                    {Object.keys(currentDialog.details).length !== 0 ? <Header /> : null}
 
                     <div className="chat__messages container">
-                        {currentChatMessages.map((item, key) => <Message key={key} currentUser={currentUser} messageDetails={item}/>)}
+                        {currentDialogMessages.length !== 0 ? currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>) : null}
                     </div>
 
                     <div className="chat__footer container">
-                        <MessageForm currentDialog={currentDialog}/>
+                        {Object.keys(currentDialog.details).length !== 0 ? <MessageForm /> : null}
                     </div>
                 </div>
             </div>
         </section>
     )
-}
-
-View.prototype = {
-    currentUser: PropTypes.object.isRequired,
-    currentDialog: PropTypes.object.isRequired
 }
 
 export default View;

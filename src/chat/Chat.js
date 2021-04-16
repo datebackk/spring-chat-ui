@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
-import {loggedInUser, navBar} from "../atom/globalState";
-import {openedDialog} from "../atom/globalState";
-import {useRecoilState} from "recoil";
 import {getCurrentUser} from "../util/ApiUtil";
 import "./Chat.scss"
 import Navbar from "./navbar/Navbar";
 import Page from "./page/Page";
 import View from "./view/View";
+import {useDispatch} from "react-redux";
+import {setUser} from "../store/currentUser/actions";
 
 const Chat = (props) => {
 
-    const [currentUser, setLoggedInUser] = useRecoilState(loggedInUser);
-    const [currentDialog, setCurrentDialog] = useRecoilState(openedDialog);
-    const [tabs, setActiveTab] = useRecoilState(navBar);
+    const currentUserDispatch = useDispatch();
 
     useEffect(() => {
         if (localStorage.getItem("accessToken") === null) {
@@ -25,7 +22,7 @@ const Chat = (props) => {
     const loadCurrentUser = () => {
         getCurrentUser()
             .then((response) => {
-                setLoggedInUser(response);
+                currentUserDispatch(setUser(response));
             })
             .catch((error) => {
                 console.log(error);
@@ -37,27 +34,12 @@ const Chat = (props) => {
         props.history.push("/login");
     };
 
-    const switchTab = (tabName) => {
-        let newTabs = JSON.parse(JSON.stringify(tabs));
-        for (const key in newTabs) {
-            console.log(newTabs[key]);
-            if (newTabs[key].isActive || tabName === key) {
-                newTabs[key].isActive = !newTabs[key].isActive;
-            }
-
-        }
-        return  setActiveTab(newTabs);
-    }
-
-    const openDialog = (details) => {
-        setCurrentDialog({details: details});
-    }
 
     return (
         <section className="wrapper">
-            <Navbar tabs={tabs} switchTab={switchTab}/>
-            <Page activeTab={tabs} currentUser={currentUser} openDialog={openDialog}/>
-            <View currentUser={currentUser} currentDialog={currentDialog}/>
+            <Navbar />
+            <Page />
+            <View />
         </section>
     );
 };

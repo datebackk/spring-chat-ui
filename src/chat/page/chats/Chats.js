@@ -1,14 +1,14 @@
 import React, {useEffect} from "react";
 import ChatCard from "./ChatCard/ChatCard";
-import PropTypes from "prop-types";
 import {getUserChats} from "../../../util/ApiUtil";
-import {useRecoilState} from "recoil";
-import {chats} from "../../../atom/globalState";
+import {useDispatch, useSelector} from "react-redux";
+import {setChats} from "../../../store/page/chats/actions";
 
 
-const Chats = ({currentUser, openDialog}) => {
+const Chats = (props) => {
 
-    const [userChats, setChats] = useRecoilState(chats);
+    const userChats = useSelector(state => state.chats);
+    const chatsDispatch = useDispatch();
 
     useEffect(() => {
         loadChats();
@@ -17,22 +17,20 @@ const Chats = ({currentUser, openDialog}) => {
     const loadChats = () => {
         getUserChats()
             .then((response) => {
-                setChats(response);
+                chatsDispatch(setChats(response));
             })
             .catch((error) => {
                 console.log(error);
             });
     }
-    // console.log(typeof userChats, userChats, 111)
-    // return <h1 style={{color: 'white'}}>Ghbd</h1>
-    //
-    console.log(userChats);
-    return userChats.map((item, key) => <ChatCard key={key} currentUser={currentUser} cardDetails={item} openDialog={openDialog} />)
-};
 
-Chats.prototype = {
-    currentUser: PropTypes.object.isRequired,
-    openDialog: PropTypes.func.isRequired
-}
+    return (
+        userChats.length !== 0 ? (
+            userChats.map((item, key) => <ChatCard key={key} cardDetails={item} />)
+        ) : (
+            <h1>У вас нет диалогов</h1>
+        )
+    )
+};
 
 export default Chats;

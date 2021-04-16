@@ -3,18 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-sass": "4.14.1",
+    "prop-types": "15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.15.4",
+    "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-scroll-to-bottom": "^3.0.0",
     "react-stomp": "^5.0.0",
-    "recoil": "0.0.10",
-    "sockjs-client": "^1.4.0",
-    "react-hook-form": "^6.15.4",
-    "node-sass": "4.14.1",
-    "prop-types": "15.7.2"
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
+    "sockjs-client": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,6 +41,6 @@
     ]
   },
   "devDependencies": {
-    "recoil-persist": "^0.6.0"
+
   }
 }

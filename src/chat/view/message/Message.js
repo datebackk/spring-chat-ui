@@ -1,9 +1,12 @@
 import React from "react";
 import "./Message.scss"
 import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
 
-const Message = ({currentUser, messageDetails}) => {
+const Message = ({messageDetails}) => {
+
+    const currentUser = useSelector(state => state.currentUser);
 
     let messageClass = ['message'];
     console.log(messageDetails.senderId, currentUser.id);
@@ -34,7 +37,6 @@ const Message = ({currentUser, messageDetails}) => {
 }
 
 Message.prototype = {
-    currentUser: PropTypes.object.isRequired,
     currentDialog: PropTypes.object.isRequired
 }
 
