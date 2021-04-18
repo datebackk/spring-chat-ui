@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { login } from "../util/ApiUtil";
+import {getCurrentUser, login} from "../util/ApiUtil";
+import {useDispatch} from "react-redux";
+import {fetchUser} from "../store/currentUser/reducers";
 
 const Signin = (props) => {
 
   const { register, handleSubmit, errors } = useForm();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (localStorage.getItem("accessToken") !== null) {
@@ -18,6 +21,7 @@ const Signin = (props) => {
       .then((response) => {
           localStorage.setItem("accessToken", response.accessToken);
           props.history.push("/");
+          dispatch(fetchUser());
       })
       .catch((error) => {
         if (error.status === 401) {
@@ -27,6 +31,7 @@ const Signin = (props) => {
         }
       });
   };
+
 
   return (
       <form onSubmit={handleSubmit(onFinish)}>

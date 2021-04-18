@@ -23,7 +23,7 @@ const ChatCard = ({cardDetails}) => {
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
-                        <img className="chat-card__avatar-img" src="../../../../assets/img/avatar.jpg" alt="avatar"/>
+                        <img className="chat-card__avatar-img" src={require('../../../../assets/img/avatar.jpg')} alt="avatar"/>
                     </div>
                     <div className="chat-card__media">
                         <div className="chat-card__title">

@@ -77,7 +77,7 @@ export function getUserChats() {
   });
 }
 
-export function sendNewMessage() {
+export function sendNewMessage(newMessage) {
   if (!localStorage.getItem("accessToken")) {
     return Promise.reject("No access token set.");
   }
@@ -85,6 +85,7 @@ export function sendNewMessage() {
   return request({
     url: CHAT_SERVICE + "/message",
     method: "POST",
+    body: JSON.stringify(newMessage),
   });
 }
 

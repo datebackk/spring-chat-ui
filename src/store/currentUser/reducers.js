@@ -1,6 +1,21 @@
-import {SET_USER} from "./actions";
+import {SET_USER, setUser} from "./actions";
+import {getCurrentUser} from "../../util/ApiUtil";
 
 const defaultState = {};
+
+
+export const fetchUser = () => {
+    return (dispatch) => {
+        getCurrentUser()
+            .then((response) => {
+                dispatch(setUser(response));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
 
 export const currentUserReducer = (state = defaultState, action) => {
     switch (action.type) {

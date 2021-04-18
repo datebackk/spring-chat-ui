@@ -17,7 +17,7 @@ const Message = ({messageDetails}) => {
     return (
         <div className={messageClass.join(' ')}>
             <a className="message__avatar" href="#">
-                <img className="message__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
+                <img className="message__avatar-img" src={require('../../../assets/img/avatar.jpg')} alt="avatar"/>
             </a>
 
             <div className="message__body">

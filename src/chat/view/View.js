@@ -36,7 +36,8 @@ const View = (props) => {
                     {Object.keys(currentDialog.details).length !== 0 ? <Header /> : null}
 
                     <div className="chat__messages container">
-                        {currentDialogMessages.length !== 0 ? currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>) : null}
+                        {currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>)}
+                        {/*{currentDialogMessages.length !== 0 ? currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>) : null}*/}
                     </div>
 
                     <div className="chat__footer container">

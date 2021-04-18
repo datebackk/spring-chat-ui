@@ -1,12 +1,25 @@
-import {SET_MESSAGES} from "./actions";
+import {ADD_MESSAGE, SET_MESSAGES} from "./actions";
 
-const defaultState = [];
+let defaultState = [];
+
+const addMessage = message => {
+    defaultState.push(message);
+    return defaultState.slice();
+}
+
+const setMessages = messages => {
+    defaultState = messages
+    return defaultState.slice();
+}
 
 export const messagesReducer = (state = defaultState, action) => {
     switch (action.type) {
 
         case SET_MESSAGES:
-            return action.payload;
+            return setMessages(action.payload);
+
+        case ADD_MESSAGE:
+            return addMessage(action.payload)
 
         default:
             return state;

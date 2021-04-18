@@ -19,7 +19,7 @@ const Header = (props) => {
     return (
         <div className="chat__header container">
             <div className="chat__header__avatar">
-                <img className="chat__header__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
+                <img className="chat__header__avatar-img" src={require('../../../assets/img/avatar.jpg')} alt="avatar"/>
             </div>
             <div className="chat__header__info">
                 {title}

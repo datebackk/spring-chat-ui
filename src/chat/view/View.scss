@@ -55,6 +55,8 @@
   }
 
   &__messages {
+    overflow-y: auto;
+    height: 100px;
     flex: 1 0 auto;
   }
 
