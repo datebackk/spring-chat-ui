@@ -6,6 +6,7 @@ import {getChatMessages} from "../../util/ApiUtil";
 import Header from "./header/Header";
 import {useDispatch, useSelector} from "react-redux";
 import {setMessages} from "../../store/page/chats/messages/actions";
+import ScrollableFeed from 'react-scrollable-feed'
 
 const View = (props) => {
 
@@ -35,10 +36,14 @@ const View = (props) => {
 
                     {Object.keys(currentDialog.details).length !== 0 ? <Header /> : null}
 
-                    <div className="chat__messages container">
-                        {currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>)}
-                        {/*{currentDialogMessages.length !== 0 ? currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>) : null}*/}
-                    </div>
+
+                        <div className="chat__messages container">
+                            <ScrollableFeed>
+                            {currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>)}
+                            </ScrollableFeed>
+                        </div>
+
+
 
                     <div className="chat__footer container">
                         {Object.keys(currentDialog.details).length !== 0 ? <MessageForm /> : null}

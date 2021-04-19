@@ -6,11 +6,13 @@ import View from "./view/View";
 import {useDispatch, useSelector} from "react-redux";
 import "./Chat.scss";
 import {fetchUser} from "../store/currentUser/reducers";
+import { connect } from "../util/WebSocketUtil";
+import WebSocket from "./WebSocket/WebSocket";
 
-var stompClient = null;
 const Chat = (props) => {
 
     const dispatch = useDispatch();
+
     const currentUser = useSelector(state => state.currentUser);
 
     useEffect(() => {
@@ -18,8 +20,9 @@ const Chat = (props) => {
             props.history.push("/login");
         }
         dispatch(fetchUser());
-        connect();
+        // connect()
     }, []);
+
 
 
     // const loadCurrentUser = () => {
@@ -33,28 +36,6 @@ const Chat = (props) => {
     // };
 
 
-    const connect = () => {
-        const Stomp = require("stompjs");
-        var SockJS = require("sockjs-client");
-        SockJS = new SockJS("http://localhost:8080/chat");
-        stompClient = Stomp.over(SockJS);
-        stompClient.connect({}, onConnected, onError);
-    };
-
-
-    const onConnected = () => {
-        console.log("connected");
-        console.log(currentUser);
-        stompClient.subscribe("/chat/messages/" + 6, onMessageReceived);
-    };
-
-    const onMessageReceived = (msg) => {
-        console.log(msg);
-    }
-
-    const onError = (err) => {
-        console.log(err);
-    };
 
     const logout = () => {
         localStorage.removeItem("accessToken");
@@ -63,6 +44,7 @@ const Chat = (props) => {
 
     return (
         <section className="wrapper">
+            <WebSocket/>
             <Navbar />
             <Page />
             <View />

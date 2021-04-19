@@ -10,6 +10,7 @@ const MessageForm = (props) => {
 
     const currentDialog = useSelector(state => state.view);
     const currentUser = useSelector(state => state.currentUser);
+    const stompClient = useSelector(state => state.stompClient);
 
     const dispatch = useDispatch();
 
@@ -24,6 +25,7 @@ const MessageForm = (props) => {
         console.log(newMessage);
 
         sendNewMessage(newMessage);
+        stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(newMessage))
         dispatch(addMessage(newMessage));
     }
 
