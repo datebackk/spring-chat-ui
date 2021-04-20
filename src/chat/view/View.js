@@ -37,11 +37,11 @@ const View = (props) => {
                     {Object.keys(currentDialog.details).length !== 0 ? <Header /> : null}
 
 
-                        <div className="chat__messages container">
-                            <ScrollableFeed>
+                        {/*<div className="chat__messages container">*/}
+                        <ScrollableFeed className={"chat__messages container"}>
                             {currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>)}
-                            </ScrollableFeed>
-                        </div>
+                        </ScrollableFeed>
+                        {/*</div>*/}
 
 
 
