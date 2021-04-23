@@ -1,7 +1,7 @@
 import React from "react";
 import "./UsersCard.scss";
 
-const UserCard = (props) => {
+const UserCard = ({user}) => {
     return (
         <div className="chat-card">
             <div className="chat-card__body">
@@ -11,7 +11,7 @@ const UserCard = (props) => {
                     </div>
                     <div className="chat-card__media">
                         <div className="chat-card__title">
-                            <h6>U1</h6>
+                            <h6>{user.nickname}</h6>
                             <p>10:20 am</p>
                         </div>
                         <div className="chat-card__text">

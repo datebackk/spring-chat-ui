@@ -55,17 +55,6 @@ export function getCurrentUser() {
   });
 }
 
-export function getUsers() {
-  if (!localStorage.getItem("accessToken")) {
-    return Promise.reject("No access token set.");
-  }
-
-  return request({
-    url: AUTH_SERVICE + "/users/summaries",
-    method: "GET",
-  });
-}
-
 export function getUserChats() {
   if (!localStorage.getItem("accessToken")) {
     return Promise.reject("No access token set.");
@@ -96,6 +85,13 @@ export function getChatMessages(chatId) {
 
   return request({
     url: CHAT_SERVICE + "/message/" + chatId,
+    method: "GET",
+  });
+}
+
+export function getUsers(nickname) {
+  return request({
+    url: CHAT_SERVICE + "/user/" + nickname,
     method: "GET",
   });
 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import SockJS from "sockjs-client";
 import {newStompclient} from "../../store/stomClient/reducers";
+import {addMessage} from "../../store/page/chats/messages/actions";
 
 
 const WebSocket = (props) => {
@@ -25,7 +26,9 @@ const WebSocket = (props) => {
     };
 
     const onMessageReceived = (msg) => {
-        console.log(msg);
+        console.log(JSON.parse(msg.body));
+        dispatch(addMessage(JSON.parse(msg.body)));
+
     }
 
     const onError = (err) => {

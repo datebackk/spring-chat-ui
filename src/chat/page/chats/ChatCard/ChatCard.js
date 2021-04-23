@@ -8,7 +8,7 @@ import {openDialog} from "../../../../store/view/actions";
 const ChatCard = ({cardDetails}) => {
 
     const currentUser = useSelector(state => state.currentUser);
-    const viewDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     let title;
     if (cardDetails.sender.id === currentUser.id) {
@@ -19,7 +19,7 @@ const ChatCard = ({cardDetails}) => {
 
 
     return (
-        <div className="chat-card" onClick={() => viewDispatch(openDialog(cardDetails))}>
+        <div className="chat-card" onClick={() => dispatch(openDialog(cardDetails))}>
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
