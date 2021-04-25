@@ -27,7 +27,10 @@ const View = (props) => {
             .catch((error) => {
                 console.log(error);
             });
+
     }
+
+    console.log(currentDialogMessages);
 
     return (
         <section className="view">

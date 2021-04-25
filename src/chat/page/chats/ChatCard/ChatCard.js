@@ -3,40 +3,29 @@ import "./ChatCard.scss"
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {openDialog} from "../../../../store/view/actions";
-import {countNewMessages} from "../../../../util/messageUtil";
 
 
 const ChatCard = ({cardDetails}) => {
 
     const currentUser = useSelector(state => state.currentUser);
     const dispatch = useDispatch();
-
-    const [currentCardDetails, setCardDetails] = useState(cardDetails);
+    const [newMessages, setNewMessages] = useState(cardDetails.newMessages);
 
     useEffect(() => {
-        getNewMessages()
+        setNewMessages(cardDetails.newMessages);
     }, [cardDetails])
 
-    const getNewMessages = () => {
-        countNewMessages(currentCardDetails.chatId)
-            .then((response) => {
-                setCardDetails({...currentCardDetails, newMessages: response.countedMessages !== 0 ? response.countedMessages : null})
-             })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
 
     const handleClick = () => {
-        dispatch(openDialog(currentCardDetails))
-        setCardDetails({...cardDetails, newMessages: null})
+        setNewMessages(0);
+        dispatch(openDialog(cardDetails))
     }
 
     let title;
-    if (currentCardDetails.sender.id === currentUser.id) {
-        title = <h6>{currentCardDetails.recipient.nickname}</h6>
+    if (cardDetails.sender.id === currentUser.id) {
+        title = <h6>{cardDetails.recipient.nickname} {newMessages}</h6>
     } else {
-        title = <h6>{currentCardDetails.sender.nickname}</h6>
+        title = <h6>{cardDetails.sender.nickname} {newMessages}</h6>
     }
 
 
@@ -50,11 +39,11 @@ const ChatCard = ({cardDetails}) => {
                     <div className="chat-card__media">
                         <div className="chat-card__title">
                             {title}
-                            {currentCardDetails.newMessages}
-                            <p>10:20 am {currentCardDetails.newMessages}</p>
+                            <p>{cardDetails.lastMessage.date}</p>
+
                         </div>
                         <div className="chat-card__text">
-                            Hello! Let me transfer you to the marketing department.
+                            {cardDetails.lastMessage.message}
                         </div>
                     </div>
                 </div>

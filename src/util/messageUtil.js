@@ -30,7 +30,7 @@ export function countNewMessages(chatId) {
     });
 }
 
-export function updateMessageStatus(message) {
+export function updateMessage(message) {
     return request({
         url: CHAT_SERVICE + "/message/",
         method: "PUT",

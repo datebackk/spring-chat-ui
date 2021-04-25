@@ -13,8 +13,8 @@ const setMessages = messages => {
 }
 
 const updateMessageStatus = message => {
-    console.log(defaultState.map((item) => item.chatId === message.chatId ? item.status = "READ" : item))
-    return defaultState.map((item) => item.chatId === message.chatId ? item.status = "READ" : item);
+    defaultState = defaultState.map((item) => item.id === message.id ? {...item, status: "READ"} : {...item});
+    return defaultState.slice();
 }
 
 export const messagesReducer = (state = defaultState, action) => {

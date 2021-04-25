@@ -6,6 +6,7 @@ import * as yup from "yup";
 import {addMessage} from "../../../store/page/chats/messages/actions";
 import {sendNewMessage} from "../../../util/messageUtil";
 import moment from "moment";
+import {softUpdate} from "../../../store/page/chats/actions";
 
 const MessageForm = (props) => {
 
@@ -28,6 +29,7 @@ const MessageForm = (props) => {
             .then((response) => {
                 stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(response))
                 dispatch(addMessage(response));
+                dispatch(softUpdate(currentDialog.details, response));
             })
             .catch((error) => {
                 console.log(error);

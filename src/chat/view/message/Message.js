@@ -1,32 +1,32 @@
 import React, {useEffect, useState} from "react";
 import "./Message.scss"
 import PropTypes from "prop-types";
-import {useSelector} from "react-redux";
-import {updateMessageStatus} from "../../../util/messageUtil";
+import {useDispatch, useSelector} from "react-redux";
+import {updateMessage} from "../../../util/messageUtil";
 import moment from "moment";
+import {updateMessageStatus} from "../../../store/page/chats/messages/actions";
 
 
 const Message = ({messageDetails}) => {
 
     const currentUser = useSelector(state => state.currentUser);
     const stompClient = useSelector(state => state.stompClient);
-    const [message, setMessage] = useState(messageDetails);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (message.senderId !== currentUser.id && message.status === "SENT") {
-            updateMessageStatus({...message, status: "READ"})
+        if (messageDetails.senderId !== currentUser.id && messageDetails.status === "SENT") {
+            updateMessage({...messageDetails, status: "READ"})
                 .then((response) => {
-                    setMessage(response);
                     stompClient.send("/app/message-status/" + response.senderId, {}, JSON.stringify(response))
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
-    }, [messageDetails])
+    }, [])
 
     let messageClass = ['message'];
-    if (message.senderId === currentUser.id) {
+    if (messageDetails.senderId === currentUser.id) {
         messageClass.push('message--right');
     }
 
@@ -40,10 +40,10 @@ const Message = ({messageDetails}) => {
                 <div className="message__row">
                     <div className="message__card">
                         <div className="message__content">
-                            {message.message}
+                            {messageDetails.message}
                         </div>
                         <div className="message__time">
-                            {moment.utc(message.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()} {message.status}
+                            {moment.utc(messageDetails.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()} {messageDetails.status}
                         </div>
                     </div>
                 </div>

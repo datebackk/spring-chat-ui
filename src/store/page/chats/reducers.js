@@ -1,4 +1,4 @@
-import {SET_CHATS, UPDATE_CHATS} from "./actions";
+import {SET_CHATS, SOFT_UPDATE, STRONG_UPDATE, UPDATE_CHATS} from "./actions";
 
 let defaultState = [];
 
@@ -7,9 +7,15 @@ const setChats = chats => {
     return defaultState.slice();
 }
 
-const updateChats = chat => {
+const strongUpdate = ({chat, message}) => {
     defaultState = defaultState.filter((item) => item.chatId !== chat.chatId);
-    defaultState.unshift({...chat, newMessages: chat.newMessages++});
+    defaultState.unshift({...chat, lastMessage: {...message}, newMessages: chat.newMessages + 1});
+    return defaultState.slice();
+}
+
+const softUpdate = ({chat, message}) => {
+    defaultState = defaultState.filter((item) => item.chatId !== chat.chatId);
+    defaultState.unshift({...chat, lastMessage: {...message}});
     return defaultState.slice();
 }
 
@@ -19,8 +25,11 @@ export const chatsReducer = (state = defaultState, action) => {
         case SET_CHATS:
             return setChats(action.payload);
 
-        case UPDATE_CHATS:
-            return updateChats(action.payload);
+        case STRONG_UPDATE:
+            return strongUpdate(action.payload);
+
+        case SOFT_UPDATE:
+            return softUpdate(action.payload);
 
         default:
             return state;
