@@ -1,16 +1,32 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Message.scss"
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
+import {updateMessageStatus} from "../../../util/messageUtil";
+import moment from "moment";
 
 
 const Message = ({messageDetails}) => {
 
     const currentUser = useSelector(state => state.currentUser);
+    const stompClient = useSelector(state => state.stompClient);
+    const [message, setMessage] = useState(messageDetails);
+
+    useEffect(() => {
+        if (message.senderId !== currentUser.id && message.status === "SENT") {
+            updateMessageStatus({...message, status: "READ"})
+                .then((response) => {
+                    setMessage(response);
+                    stompClient.send("/app/message-status/" + response.senderId, {}, JSON.stringify(response))
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [messageDetails])
 
     let messageClass = ['message'];
-    console.log(messageDetails.senderId, currentUser.id);
-    if (messageDetails.senderId === currentUser.id) {
+    if (message.senderId === currentUser.id) {
         messageClass.push('message--right');
     }
 
@@ -24,10 +40,10 @@ const Message = ({messageDetails}) => {
                 <div className="message__row">
                     <div className="message__card">
                         <div className="message__content">
-                            {messageDetails.message}
+                            {message.message}
                         </div>
                         <div className="message__time">
-                            8 min ago
+                            {moment.utc(message.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()} {message.status}
                         </div>
                     </div>
                 </div>
@@ -36,7 +52,7 @@ const Message = ({messageDetails}) => {
     )
 }
 
-Message.prototype = {
+Message.propTypes = {
     currentDialog: PropTypes.object.isRequired
 }
 

@@ -5,7 +5,10 @@ import App from "./App";
 import {Provider} from "react-redux";
 import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import moment from "moment";
+import 'moment/locale/ru';
 
+moment.locale('ru')
 
 ReactDOM.render(
     <Provider store={store}>

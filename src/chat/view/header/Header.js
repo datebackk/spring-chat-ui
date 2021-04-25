@@ -9,7 +9,6 @@ const Header = (props) => {
     const currentUser = useSelector(state => state.currentUser);
 
     let title;
-    console.log(currentDialog);
     if (currentDialog.details.sender.id === currentUser.id) {
         title = <h6>{currentDialog.details.recipient.nickname}</h6>
     } else {

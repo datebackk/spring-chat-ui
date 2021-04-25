@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {getCurrentUser, login} from "../util/ApiUtil";
 import {useDispatch} from "react-redux";
 import {fetchUser} from "../store/currentUser/reducers";
+import {login} from "../util/userUtil";
 
 const Signin = (props) => {
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { signup } from "../util/ApiUtil";
+import {signup} from "../util/userUtil";
 
 const Signup = (props) => {
 

@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import {getCurrentUser} from "../util/ApiUtil";
 import Navbar from "./navbar/Navbar";
 import Page from "./page/Page";
 import View from "./view/View";
 import {useDispatch, useSelector} from "react-redux";
 import "./Chat.scss";
 import {fetchUser} from "../store/currentUser/reducers";
-import { connect } from "../util/WebSocketUtil";
 import WebSocket from "./WebSocket/WebSocket";
 
 const Chat = (props) => {
@@ -20,7 +18,6 @@ const Chat = (props) => {
             props.history.push("/login");
         }
         dispatch(fetchUser());
-        // connect()
     }, []);
 
 

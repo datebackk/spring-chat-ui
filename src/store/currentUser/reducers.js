@@ -1,5 +1,5 @@
 import {SET_USER, setUser} from "./actions";
-import {getCurrentUser} from "../../util/ApiUtil";
+import {getCurrentUser} from "../../util/userUtil";
 
 const defaultState = {};
 

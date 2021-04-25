@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import UserCard from "./UserCard/UserCard";
-import {getUsers} from "../../../util/ApiUtil";
+import {getUsers} from "../../../util/userUtil";
 
 const Users = (props) => {
 

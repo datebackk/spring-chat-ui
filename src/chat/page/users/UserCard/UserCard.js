@@ -2,6 +2,9 @@ import React from "react";
 import "./UsersCard.scss";
 
 const UserCard = ({user}) => {
+
+
+
     return (
         <div className="chat-card">
             <div className="chat-card__body">

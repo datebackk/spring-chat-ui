@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import ChatCard from "./ChatCard/ChatCard";
-import {getUserChats} from "../../../util/ApiUtil";
 import {useDispatch, useSelector} from "react-redux";
 import {setChats} from "../../../store/page/chats/actions";
+import {getUserChats} from "../../../util/chatsUttil";
 
 
 const Chats = (props) => {

@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 import "./View.scss"
 import Message from "./message/Message";
 import MessageForm from "./MessageFrom/MessageForm";
-import {getChatMessages} from "../../util/ApiUtil";
 import Header from "./header/Header";
 import {useDispatch, useSelector} from "react-redux";
 import {setMessages} from "../../store/page/chats/messages/actions";
 import ScrollableFeed from 'react-scrollable-feed'
+import {getChatMessages} from "../../util/messageUtil";
 
 const View = (props) => {
 

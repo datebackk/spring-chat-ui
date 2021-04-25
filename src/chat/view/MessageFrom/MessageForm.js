@@ -1,10 +1,11 @@
 import React from "react";
 import "./MessageFrom.scss"
-import {sendNewMessage} from "../../../util/ApiUtil";
 import {useDispatch, useSelector} from "react-redux";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {addMessage} from "../../../store/page/chats/messages/actions";
+import {sendNewMessage} from "../../../util/messageUtil";
+import moment from "moment";
 
 const MessageForm = (props) => {
 
@@ -19,14 +20,18 @@ const MessageForm = (props) => {
             chatId: currentDialog.details.chatId,
             senderId: currentUser.id,
             recipientId: currentDialog.details.sender.id === currentUser.id ? currentDialog.details.recipient.id : currentDialog.details.sender.id,
-            message: message.message
+            message: message.message,
+            date: moment.utc().format('DD.MM.YYYY HH:mm:ss'),
+            status: "SENT",
         }
-
-        console.log(newMessage);
-
-        sendNewMessage(newMessage);
-        stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(newMessage))
-        dispatch(addMessage(newMessage));
+        sendNewMessage(newMessage)
+            .then((response) => {
+                stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(response))
+                dispatch(addMessage(response));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     const validationSchema = yup.object().shape({
@@ -41,7 +46,7 @@ const MessageForm = (props) => {
         >
             {({values, errors, touched, handleChange, isValid, handleSubmit, dirty}) => (
                 <form onSubmit={handleSubmit} className="chat__footer__form-group">
-                    <textarea placeholder="Наберите свое сообщение..."
+                    <textarea placeholder="Напишите сообщение..."
                               name={"message"}
                               onChange={handleChange}
                               defaultValue={values.message}
