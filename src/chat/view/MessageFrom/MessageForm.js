@@ -7,6 +7,8 @@ import {addMessage} from "../../../store/page/chats/messages/actions";
 import {sendNewMessage} from "../../../util/messageUtil";
 import moment from "moment";
 import {softUpdate} from "../../../store/page/chats/actions";
+import {createNewChat} from "../../../util/chatsUttil";
+import {openDialog} from "../../../store/view/actions";
 
 const MessageForm = (props) => {
 
@@ -15,8 +17,13 @@ const MessageForm = (props) => {
     const stompClient = useSelector(state => state.stompClient);
 
     const dispatch = useDispatch();
-
+    console.log(currentDialog.details);
     const sendMessage = message => {
+        if (currentDialog.action === "CREATE") {
+
+            createNewChat(currentDialog.details);
+
+        }
         const newMessage = {
             chatId: currentDialog.details.chatId,
             senderId: currentUser.id,
@@ -34,6 +41,10 @@ const MessageForm = (props) => {
             .catch((error) => {
                 console.log(error);
             });
+
+        if (currentDialog.action === "CREATE") {
+            dispatch(openDialog(currentDialog));
+        }
     }
 
     const validationSchema = yup.object().shape({

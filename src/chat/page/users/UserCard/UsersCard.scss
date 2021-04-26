@@ -4,6 +4,8 @@
   background-color: #29242a;
   border: 1px solid rgba(47,42,48,.85);
   border-radius: .375rem;
+  margin-bottom: 20px;
+  position: relative;
 
   &__body {
     width: 100%;
@@ -58,4 +60,22 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+}
+
+.card-badge {
+  font-size: 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  border: 5px solid #2f2a30;
+  color: #fff;
+  background-color: #0176ff;
+  height: 30px;
+  width: 30px;
+  min-width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(25%,-25%);
 }

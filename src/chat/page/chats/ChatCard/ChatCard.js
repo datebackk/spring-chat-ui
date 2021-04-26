@@ -23,14 +23,17 @@ const ChatCard = ({cardDetails}) => {
 
     let title;
     if (cardDetails.sender.id === currentUser.id) {
-        title = <h6>{cardDetails.recipient.nickname} {newMessages}</h6>
+        title = <h6>{cardDetails.recipient.nickname}</h6>
     } else {
-        title = <h6>{cardDetails.sender.nickname} {newMessages}</h6>
+        title = <h6>{cardDetails.sender.nickname}</h6>
     }
 
 
     return (
         <div className="chat-card" onClick={handleClick}>
+            <div className="card-badge">
+                <span>{newMessages}</span>
+            </div>
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
@@ -39,11 +42,11 @@ const ChatCard = ({cardDetails}) => {
                     <div className="chat-card__media">
                         <div className="chat-card__title">
                             {title}
-                            <p>{cardDetails.lastMessage.date}</p>
+                            <p>{cardDetails.lastMessage?.date}</p>
 
                         </div>
                         <div className="chat-card__text">
-                            {cardDetails.lastMessage.message}
+                            {cardDetails.lastMessage?.message}
                         </div>
                     </div>
                 </div>

@@ -10,3 +10,19 @@ export function getUserChats() {
         method: "GET",
     });
 }
+
+
+export function getUserChat(email) {
+    return request({
+        url: CHAT_SERVICE + "/chats?amount=single&userEmail=" + email,
+        method: "GET",
+    });
+}
+
+export function createNewChat(chat) {
+    return request({
+        url: CHAT_SERVICE + "/chats",
+        method: "POST",
+        body: JSON.stringify(chat)
+    });
+}

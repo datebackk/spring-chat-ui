@@ -25,12 +25,11 @@ const Chats = (props) => {
     }
 
     return (
-        userChats.length !== 0 ? (
-            userChats.map((item, key) => <ChatCard key={key} cardDetails={item} />)
-        ) : (
-            <h1>У вас нет диалогов</h1>
-        )
-    )
+        <div>
+            <h2 className="page__title">Чаты</h2>
+            {userChats.length !== 0 ? (userChats.map((item, key) => <ChatCard key={key} cardDetails={item} />)) : (<h1>У вас нет диалогов</h1>)}
+        </div>
+    );
 };
 
 export default Chats;
