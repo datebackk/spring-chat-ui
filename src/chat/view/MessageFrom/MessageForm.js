@@ -22,7 +22,7 @@ const MessageForm = (props) => {
         if (currentDialog.action === "CREATE") {
 
             createNewChat(currentDialog.details);
-
+            setTimeout(console.log('Прошло 4 секунды'), 4000)
         }
         const newMessage = {
             chatId: currentDialog.details.chatId,
@@ -54,7 +54,11 @@ const MessageForm = (props) => {
     return (
         <Formik initialValues={{message: ''}}
                 validateOnBlur
-                onSubmit={(values) => sendMessage(values)}
+                onSubmit={(values, onSubmitProps) => {
+                    //sendMessage(values)
+                    onSubmitProps.setSubmitting(false);
+                    onSubmitProps.resetForm();
+                }}
                 validationSchema={validationSchema}
         >
             {({values, errors, touched, handleChange, isValid, handleSubmit, dirty}) => (

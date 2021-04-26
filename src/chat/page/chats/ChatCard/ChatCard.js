@@ -28,10 +28,15 @@ const ChatCard = ({cardDetails}) => {
         title = <h6>{cardDetails.sender.nickname}</h6>
     }
 
+    let badgeClass = ['card-badge']
+    if (newMessages >= 1) {
+        badgeClass.push('card-badge-show')
+    }
+
 
     return (
         <div className="chat-card" onClick={handleClick}>
-            <div className="card-badge">
+            <div className={badgeClass.join(' ')}>
                 <span>{newMessages}</span>
             </div>
             <div className="chat-card__body">

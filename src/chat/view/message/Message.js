@@ -1,17 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import "./Message.scss"
 import PropTypes from "prop-types";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {updateMessage} from "../../../util/messageUtil";
 import moment from "moment";
-import {updateMessageStatus} from "../../../store/page/chats/messages/actions";
 
 
 const Message = ({messageDetails}) => {
 
     const currentUser = useSelector(state => state.currentUser);
     const stompClient = useSelector(state => state.stompClient);
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (messageDetails.senderId !== currentUser.id && messageDetails.status === "SENT") {
@@ -26,8 +24,13 @@ const Message = ({messageDetails}) => {
     }, [])
 
     let messageClass = ['message'];
+    let badgeClass = ['message-badge']
     if (messageDetails.senderId === currentUser.id) {
         messageClass.push('message--right');
+    }
+
+    if (messageDetails.status === "SENT" && messageDetails.senderId === currentUser.id) {
+        badgeClass.push('message-badge-right');
     }
 
     return (
@@ -39,11 +42,13 @@ const Message = ({messageDetails}) => {
             <div className="message__body">
                 <div className="message__row">
                     <div className="message__card">
+                        <div className={badgeClass.join(' ')}>
+                        </div>
                         <div className="message__content">
                             {messageDetails.message}
                         </div>
                         <div className="message__time">
-                            {moment.utc(messageDetails.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()} {messageDetails.status}
+                            {moment.utc(messageDetails.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()}
                         </div>
                     </div>
                 </div>

@@ -17,10 +17,14 @@ const Users = (props) => {
     }
 
     return (
-        <>
-            <input type="text" onChange={findByNickname}/>
+        <div>
+            <h2 className="page__title">Пользователи</h2>
+            <div className="page__title__input__group">
+                <input type="text" onChange={findByNickname}/>
+                <button></button>
+            </div>
             {users.map((item, key) => <UserCard user={item} key={key} />)}
-        </>
+        </div>
     );
 };
 
