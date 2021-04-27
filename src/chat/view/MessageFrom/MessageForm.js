@@ -1,7 +1,7 @@
 import React from "react";
 import "./MessageFrom.scss"
 import {useDispatch, useSelector} from "react-redux";
-import {Formik} from "formik";
+import {Form, Formik} from "formik";
 import * as yup from "yup";
 import {addMessage} from "../../../store/page/chats/messages/actions";
 import {sendNewMessage} from "../../../util/messageUtil";
@@ -54,23 +54,24 @@ const MessageForm = (props) => {
     return (
         <Formik initialValues={{message: ''}}
                 validateOnBlur
-                onSubmit={(values, onSubmitProps) => {
-                    //sendMessage(values)
-                    onSubmitProps.setSubmitting(false);
-                    onSubmitProps.resetForm();
-                }}
                 validationSchema={validationSchema}
+                onSubmit={(values, {setSubmitting, resetForm}) => {
+                    sendMessage(values)
+                    // setSubmitting(true)
+                    // console.log(values)
+                    resetForm()
+                    // setSubmitting(false)
+                }}
         >
-            {({values, errors, touched, handleChange, isValid, handleSubmit, dirty}) => (
+            {({values, errors, touched, handleChange, isValid, handleSubmit, isSubmitting, dirty}) => (
                 <form onSubmit={handleSubmit} className="chat__footer__form-group">
                     <textarea placeholder="Напишите сообщение..."
                               name={"message"}
                               onChange={handleChange}
-                              defaultValue={values.message}
+                              value={values.message}
+                              autoFocus
                     />
-                    <button type={"submit"}
-                            disabled={!isValid && !dirty}
-                    ><i className="mdi mdi-send"/></button>
+                    <button type="submit" disabled={!isValid && !dirty}><i className="mdi mdi-send"/></button>
                 </form>
             )}
         </Formik>
