@@ -4,7 +4,9 @@ export const CHAT_SERVICE = "http://localhost:8080";
 export const request = (options) => {
   const headers = new Headers();
 
-  if (options.setContentType !== false) {
+  if (options.headers) {
+    headers.append("Content-Type", options.headers["Content-Type"]);
+  } else {
     headers.append("Content-Type", "application/json");
   }
 
@@ -16,7 +18,9 @@ export const request = (options) => {
   }
 
   const defaults = { headers: headers };
+  console.log(options)
   options = Object.assign({}, defaults, options);
+  console.log(options)
 
   return fetch(options.url, options).then((response) =>
     response.json().then((json) => {

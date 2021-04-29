@@ -1,4 +1,5 @@
 import {AUTH_SERVICE, CHAT_SERVICE, request} from "./request";
+export const USER_IMG_PATH = CHAT_SERVICE + '/img/'
 
 export function login(loginRequest) {
     return request({
@@ -32,5 +33,15 @@ export function getUsers(nickname) {
     return request({
         url: CHAT_SERVICE + "/user/" + nickname,
         method: "GET",
+    });
+}
+
+
+export function uploadUserImg(formData) {
+    return request({
+        url: CHAT_SERVICE + "/user/avatar",
+        method: "POST",
+        body: formData,
+        headers: {'Content-Type': 'multipart/form-data'}
     });
 }
