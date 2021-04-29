@@ -8,6 +8,11 @@ const defaultState = {
 
 const switchTab = tabName => {
     for (const key in defaultState) {
+
+        if (defaultState[key].isActive && tabName === key) {
+            return {...defaultState};
+        }
+
         if (defaultState[key].isActive || tabName === key) {
             defaultState[key].isActive = !defaultState[key].isActive;
         }
