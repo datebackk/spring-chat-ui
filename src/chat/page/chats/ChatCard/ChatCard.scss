@@ -39,13 +39,19 @@
     justify-content: space-between;
     margin-bottom: 6px;
 
-    h6, p {
-      color: #ffffff;
-      font-size: 15px;
+    p {
+      font-size: 13px;
+      line-height: 21px;
+      color: #aab0b7;
+      font-weight: 400;
       white-space: nowrap;
     }
 
     h6 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 24px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -54,8 +60,10 @@
   }
 
   &__text {
-    color: #ffffff;
+    color: #a7a7a7;
     font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

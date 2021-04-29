@@ -4,6 +4,7 @@ import "./Profile.scss"
 import {uploadUserImg, USER_IMG_PATH} from "../../../util/userUtil";
 import axios from "axios";
 import {CHAT_SERVICE} from "../../../util/request";
+import LogoutBtn from "./logoutBtn/LogoutBtn";
 
 
 const Profile = (props) => {
@@ -33,16 +34,6 @@ const Profile = (props) => {
             .catch((error) => {
                 console.log(error)
             })
-
-        // axios.post(CHAT_SERVICE + 'user/avatar', formData);
-
-        // uploadUserImg(formData)
-        //     .then((response) => {
-        //         console.log(response)
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
     }
 
     return (
@@ -50,14 +41,21 @@ const Profile = (props) => {
             <h2 className="page__title">Профиль</h2>
             <div className="user__info__card">
                 <div className="user__info__card__content">
-                    <span>
-                        <img src={USER_IMG_PATH + currentUser.userImg}/>
-                        <input type="file" accept="image/*" onChange={(e) => fileChangedHandler(e)}/>
+                    <span className="user__info__card__content__img">
+                        <label htmlFor="file-input">
+                            <img src={USER_IMG_PATH + currentUser.userImg}/>
+                        </label>
+                        <input id="file-input" type="file" accept="image/*" onChange={(e) => fileChangedHandler(e)}/>
                     </span>
                     <p className="user__info__card__content__username">{currentUser.nickname}</p>
                     <p className="user__info__card__content__about">about about</p>
                 </div>
             </div>
+
+            <div className="user__info__btn_group">
+                <LogoutBtn/>
+            </div>
+
 
         </div>
     )

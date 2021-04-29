@@ -21,24 +21,6 @@ const Chat = (props) => {
     }, []);
 
 
-
-    // const loadCurrentUser = () => {
-    //     getCurrentUser()
-    //         .then((response) => {
-    //             dispatch(fetchUser(response));
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // };
-
-
-
-    const logout = () => {
-        localStorage.removeItem("accessToken");
-        props.history.push("/login");
-    };
-
     return (
         <section className="wrapper">
             <WebSocket/>

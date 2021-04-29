@@ -40,18 +40,18 @@ const UserCard = ({user}) => {
     }
 
     return (
-        <div className="chat-card" onClick={() => handleClick()}>
-            <div className="chat-card__body">
-                <div className="chat-card__content">
-                    <div className="chat-card__avatar">
-                        <img className="chat-card__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
+        <div className="user-card" onClick={() => handleClick()}>
+            <div className="user-card__body">
+                <div className="user-card__content">
+                    <div className="user-card__avatar">
+                        <img className="user-card__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
                     </div>
-                    <div className="chat-card__media">
-                        <div className="chat-card__title">
+                    <div className="user-card__media">
+                        <div className="user-card__title">
                             <h6>{user.nickname}</h6>
                             <p>10:20 am</p>
                         </div>
-                        <div className="chat-card__text">
+                        <div className="user-card__text">
                             Hello! Let me transfer you to the marketing department.
                         </div>
                     </div>

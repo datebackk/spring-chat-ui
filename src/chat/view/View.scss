@@ -39,9 +39,11 @@
       flex-direction: column;
       justify-content: center;
 
-      h6, p {
-        color: #ffffff;
-        font-size: 15px;
+      p {
+        color: #aab0b7;
+        font-size: 13px;
+        line-height: 21px;
+        font-weight: 400;
         white-space: nowrap;
       }
 
@@ -50,6 +52,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         padding-right: 10px;
+        font-size: 15px;
+        line-height: 24px;
+        font-weight: 500;
+        color: #ffffff;
       }
     }
   }
