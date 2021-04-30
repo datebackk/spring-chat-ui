@@ -13,9 +13,9 @@ const Page = (props) => {
         <section className="pages">
             <div className="page">
                 <div className="page__content">
-                    {activeTab.users.isActive ? <Users/> : null}
+                    {activeTab.users.isActive ? <Profile/> : null}
                     {activeTab.chats.isActive ? <Chats/> : null}
-                    {activeTab.users_add.isActive ? <Profile/>: null}
+                    {activeTab.users_add.isActive ? <Users/> : null}
                 </div>
             </div>
         </section>

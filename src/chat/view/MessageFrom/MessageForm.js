@@ -20,10 +20,33 @@ const MessageForm = (props) => {
     console.log(currentDialog.details);
     const sendMessage = message => {
         if (currentDialog.action === "CREATE") {
-
-            createNewChat(currentDialog.details);
-            setTimeout(console.log('Прошло 4 секунды'), 4000)
+            createNewChat(currentDialog.details)
+                .then((response) => {
+                    if (response.status === 201) {
+                        const newMessage = {
+                            chatId: currentDialog.details.chatId,
+                            senderId: currentUser.id,
+                            recipientId: currentDialog.details.sender.id === currentUser.id ? currentDialog.details.recipient.id : currentDialog.details.sender.id,
+                            message: message.message,
+                            date: moment.utc().format('DD.MM.YYYY HH:mm:ss'),
+                            status: "SENT",
+                        }
+                        sendNewMessage(newMessage)
+                            .then((response) => {
+                                stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(response))
+                                dispatch(addMessage(response));
+                                dispatch(softUpdate(currentDialog.details, response));
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
+
         const newMessage = {
             chatId: currentDialog.details.chatId,
             senderId: currentUser.id,

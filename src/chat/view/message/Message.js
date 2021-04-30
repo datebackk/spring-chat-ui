@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import {updateMessage} from "../../../util/messageUtil";
 import moment from "moment";
+import {USER_IMG_PATH} from "../../../util/userUtil";
 
 
-const Message = ({messageDetails}) => {
+const Message = ({messageDetails, Cu}) => {
 
     const currentUser = useSelector(state => state.currentUser);
     const stompClient = useSelector(state => state.stompClient);
@@ -24,9 +25,11 @@ const Message = ({messageDetails}) => {
     }, [])
 
     let messageClass = ['message'];
-    let badgeClass = ['message-badge']
+    let badgeClass = ['message-badge'];
+    let userImg;
     if (messageDetails.senderId === currentUser.id) {
         messageClass.push('message--right');
+        userImg = USER_IMG_PATH + currentUser.userImg;
     }
 
     if (messageDetails.status === "SENT" && messageDetails.senderId === currentUser.id) {
@@ -36,7 +39,7 @@ const Message = ({messageDetails}) => {
     return (
         <div className={messageClass.join(' ')}>
             <a className="message__avatar" href="#">
-                <img className="message__avatar-img" src={require('../../../assets/img/avatar.jpg')} alt="avatar"/>
+                <img className="message__avatar-img" src={userImg} alt="avatar"/>
             </a>
 
             <div className="message__body">

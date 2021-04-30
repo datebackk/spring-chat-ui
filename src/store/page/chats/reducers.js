@@ -15,7 +15,7 @@ const strongUpdate = ({chat, message}) => {
 
 const softUpdate = ({chat, message}) => {
     defaultState = defaultState.filter((item) => item.chatId !== chat.chatId);
-    defaultState.unshift({...chat, lastMessage: {...message}});
+    defaultState.unshift({...chat, lastMessage: {...message}, newMessages: 0});
     return defaultState.slice();
 }
 

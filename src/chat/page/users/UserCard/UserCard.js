@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createDialog, openDialog} from "../../../../store/view/actions";
 import {getUserChat} from "../../../../util/chatsUttil";
 import {changeActiveTab} from "../../../../store/navbar/actions";
+import {USER_IMG_PATH} from "../../../../util/userUtil";
 
 const UserCard = ({user}) => {
     console.log(user);
@@ -44,15 +45,11 @@ const UserCard = ({user}) => {
             <div className="user-card__body">
                 <div className="user-card__content">
                     <div className="user-card__avatar">
-                        <img className="user-card__avatar-img" src="./img/avatar.jpg" alt="avatar"/>
+                        <img className="user-card__avatar-img" src={USER_IMG_PATH + user.userImg} alt="avatar"/>
                     </div>
                     <div className="user-card__media">
                         <div className="user-card__title">
                             <h6>{user.nickname}</h6>
-                            <p>10:20 am</p>
-                        </div>
-                        <div className="user-card__text">
-                            Hello! Let me transfer you to the marketing department.
                         </div>
                     </div>
                 </div>

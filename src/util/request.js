@@ -20,7 +20,6 @@ export const request = (options) => {
   const defaults = { headers: headers };
   console.log(options)
   options = Object.assign({}, defaults, options);
-  console.log(options)
 
   return fetch(options.url, options).then((response) =>
     response.json().then((json) => {

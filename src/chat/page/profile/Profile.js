@@ -48,7 +48,7 @@ const Profile = (props) => {
                         <input id="file-input" type="file" accept="image/*" onChange={(e) => fileChangedHandler(e)}/>
                     </span>
                     <p className="user__info__card__content__username">{currentUser.nickname}</p>
-                    <p className="user__info__card__content__about">about about</p>
+                    <p className="user__info__card__content__about">React - JavaScript library for building user interfaces</p>
                 </div>
             </div>
 
