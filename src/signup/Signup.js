@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import {signup} from "../util/userUtil";
+import {Formik} from "formik";
+import {Link} from "react-router-dom";
+import * as yup from "yup";
 
 const Signup = (props) => {
 
-    const { register, handleSubmit, errors } = useForm();
 
     useEffect(() => {
         if (localStorage.getItem("accessToken") !== null) {
@@ -14,7 +15,7 @@ const Signup = (props) => {
 
 
     const onFinish = values => {
-        values["roles"] = ["user"]
+        values["roles"] = [{name: 'USER'}]
         signup(values)
             .then((response) => {
                 localStorage.setItem("accessToken", response.accessToken);
@@ -29,13 +30,39 @@ const Signup = (props) => {
             });
     };
 
+    const validationSchema = yup.object().shape({
+        email: yup.string().required('пустое сообщение'),
+        password: yup.string().required('пустое сообщение')
+    })
+
     return (
-        <form onSubmit={handleSubmit(onFinish)}>
-            <input className="login__form__input" placeholder="Nickname" type="text" name="nickname" ref={register}/>
-            <input className="login__form__input" placeholder="Email" type="text" name="email" ref={register}/>
-            <input className="login__form__input" placeholder="Password" type="password" name="password" ref={register}/>
-            <button className="login__form__btn" type="submit">Войти</button>
-        </form>
+        <div className="signin">
+            <div className="signin__content">
+                <h1 className="signin__content__title">Регистрация</h1>
+                <p className="signin__content__subtitle">Добро пожаловать в мессенджер</p>
+
+                <Formik initialValues={{email: '', nickname: '', password: ''}}
+                        validateOnBlur
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => {
+                            onFinish(values)
+                        }}
+                >
+                    {({values, errors, touched, handleChange, isValid, handleSubmit, isSubmitting, dirty}) => (
+                        <form onSubmit={handleSubmit} className="signin__form">
+                            <input value={values.email} onChange={handleChange} className="signin__form__input" placeholder="Email" type="text" name="email"/>
+                            <input value={values.nickname} onChange={handleChange} className="signin__form__input" placeholder="Nickname" type="text" name="nickname"/>
+                            <input value={values.password} onChange={handleChange} className="signin__form__input" placeholder="Password" type="password" name="password"/>
+                            <button disabled={!isValid && !dirty} className="signin__form__btn" type="submit">Войти</button>
+                        </form>
+                    )}
+                </Formik>
+
+                <p className="signin__footer">
+                    Уже зарегистрированы? <Link className="signin__footer__link" to="/login">Зарегистрироваться</Link>
+                </p>
+            </div>
+        </div>
     );
 };
 
