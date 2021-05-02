@@ -3,6 +3,8 @@ import "./ChatCard.scss"
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {openDialog} from "../../../../store/view/actions";
+import {USER_IMG_PATH} from "../../../../util/userUtil";
+import moment from "moment";
 
 
 const ChatCard = ({cardDetails}) => {
@@ -22,10 +24,13 @@ const ChatCard = ({cardDetails}) => {
     }
 
     let title;
+    let userImg;
     if (cardDetails.sender.id === currentUser.id) {
         title = <h6>{cardDetails.recipient.nickname}</h6>
+        userImg = USER_IMG_PATH + cardDetails.recipient.userImg
     } else {
         title = <h6>{cardDetails.sender.nickname}</h6>
+        userImg = USER_IMG_PATH + cardDetails.sender.userImg
     }
 
     let badgeClass = ['card-badge']
@@ -42,12 +47,13 @@ const ChatCard = ({cardDetails}) => {
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
-                        <img className="chat-card__avatar-img" src={require('../../../../assets/img/avatar.jpg')} alt="avatar"/>
+                        <img className="chat-card__avatar-img" src={userImg} alt="avatar"/>
                     </div>
                     <div className="chat-card__media">
                         <div className="chat-card__title">
                             {title}
-                            <p>{cardDetails.lastMessage?.date}</p>
+                            {/*<p>{cardDetails.lastMessage?.date}</p>*/}
+                            <p>{moment.utc(cardDetails.lastMessage?.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()}</p>
 
                         </div>
                         <div className="chat-card__text">

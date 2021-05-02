@@ -26,7 +26,7 @@ const UserCard = ({user}) => {
                 }).catch((error) => {
                     if (error.status === 400) {
                         const newDialog = {
-                            chatId: currentUser.id + user.id,
+                            chatId: currentUser.id.toString() + user.id.toString(),
                             sender: currentUser,
                             recipient: user,
                             newMessages: 0,

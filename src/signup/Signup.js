@@ -6,7 +6,6 @@ import * as yup from "yup";
 
 const Signup = (props) => {
 
-
     useEffect(() => {
         if (localStorage.getItem("accessToken") !== null) {
             props.history.push("/");
@@ -53,13 +52,13 @@ const Signup = (props) => {
                             <input value={values.email} onChange={handleChange} className="signin__form__input" placeholder="Email" type="text" name="email"/>
                             <input value={values.nickname} onChange={handleChange} className="signin__form__input" placeholder="Nickname" type="text" name="nickname"/>
                             <input value={values.password} onChange={handleChange} className="signin__form__input" placeholder="Password" type="password" name="password"/>
-                            <button disabled={!isValid && !dirty} className="signin__form__btn" type="submit">Войти</button>
+                            <button disabled={!isValid && !dirty} className="signin__form__btn" type="submit">Зарегистрироваться</button>
                         </form>
                     )}
                 </Formik>
 
                 <p className="signin__footer">
-                    Уже зарегистрированы? <Link className="signin__footer__link" to="/login">Зарегистрироваться</Link>
+                    Уже зарегистрированы? <Link className="signin__footer__link" to="/login">Войти</Link>
                 </p>
             </div>
         </div>

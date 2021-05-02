@@ -20,27 +20,25 @@ const MessageForm = (props) => {
     console.log(currentDialog.details);
     const sendMessage = message => {
         if (currentDialog.action === "CREATE") {
-            createNewChat(currentDialog.details)
+
+            const newDialog = {
+                chatId: currentDialog.details.chatId,
+                sender: currentDialog.details.sender,
+                recipient: currentDialog.details.recipient,
+                newMessages: 0,
+                lastMessage: {
+                    chatId: currentDialog.details.chatId,
+                    senderId: currentUser.id,
+                    recipientId: currentDialog.details.sender.id === currentUser.id ? currentDialog.details.recipient.id : currentDialog.details.sender.id,
+                    message: message.message,
+                    date: moment.utc().format('DD.MM.YYYY HH:mm:ss'),
+                    status: "SENT",
+                }
+            }
+
+            createNewChat(newDialog)
                 .then((response) => {
-                    if (response.status === 201) {
-                        const newMessage = {
-                            chatId: currentDialog.details.chatId,
-                            senderId: currentUser.id,
-                            recipientId: currentDialog.details.sender.id === currentUser.id ? currentDialog.details.recipient.id : currentDialog.details.sender.id,
-                            message: message.message,
-                            date: moment.utc().format('DD.MM.YYYY HH:mm:ss'),
-                            status: "SENT",
-                        }
-                        sendNewMessage(newMessage)
-                            .then((response) => {
-                                stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(response))
-                                dispatch(addMessage(response));
-                                dispatch(softUpdate(currentDialog.details, response));
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            });
-                    }
+
                 })
                 .catch((error) => {
                     console.log(error)
@@ -66,7 +64,7 @@ const MessageForm = (props) => {
             });
 
         if (currentDialog.action === "CREATE") {
-            dispatch(openDialog(currentDialog));
+            dispatch(openDialog(currentDialog.details));
         }
     }
 
@@ -78,12 +76,9 @@ const MessageForm = (props) => {
         <Formik initialValues={{message: ''}}
                 validateOnBlur
                 validationSchema={validationSchema}
-                onSubmit={(values, {setSubmitting, resetForm}) => {
+                onSubmit={(values, {resetForm}) => {
                     sendMessage(values)
-                    // setSubmitting(true)
-                    // console.log(values)
                     resetForm()
-                    // setSubmitting(false)
                 }}
         >
             {({values, errors, touched, handleChange, isValid, handleSubmit, isSubmitting, dirty}) => (

@@ -7,10 +7,11 @@ import moment from "moment";
 import {USER_IMG_PATH} from "../../../util/userUtil";
 
 
-const Message = ({messageDetails, Cu}) => {
+const Message = ({messageDetails}) => {
 
     const currentUser = useSelector(state => state.currentUser);
     const stompClient = useSelector(state => state.stompClient);
+    const currentDialog = useSelector(state => state.view);
 
     useEffect(() => {
         if (messageDetails.senderId !== currentUser.id && messageDetails.status === "SENT") {
@@ -26,7 +27,7 @@ const Message = ({messageDetails, Cu}) => {
 
     let messageClass = ['message'];
     let badgeClass = ['message-badge'];
-    let userImg;
+    let userImg = USER_IMG_PATH + currentDialog.details.sender.userImg;
     if (messageDetails.senderId === currentUser.id) {
         messageClass.push('message--right');
         userImg = USER_IMG_PATH + currentUser.userImg;

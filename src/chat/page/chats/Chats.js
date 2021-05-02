@@ -3,6 +3,7 @@ import ChatCard from "./ChatCard/ChatCard";
 import {useDispatch, useSelector} from "react-redux";
 import {setChats} from "../../../store/page/chats/actions";
 import {getUserChats} from "../../../util/chatsUttil";
+import Test from "./test/Test";
 
 
 const Chats = (props) => {
@@ -27,6 +28,7 @@ const Chats = (props) => {
     return (
         <div>
             <h2 className="page__title">Чаты</h2>
+            <Test/>
             {userChats.length !== 0 ? (userChats.map((item, key) => <ChatCard key={key} cardDetails={item} />)) : (<h1>У вас нет диалогов</h1>)}
         </div>
     );
