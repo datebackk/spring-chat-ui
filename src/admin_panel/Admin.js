@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table'
 
 const empList = [
-    { id: 1, name: "Neeraj", email: 'neeraj@gmail.com', phone: 9876543210, city: "Bangalore" },
-    { id: 2, name: "Raj", email: 'raj@gmail.com', phone: 9812345678, city: "Chennai" },
-    { id: 3, name: "David", email: 'david342@gmail.com', phone: 7896536289, city: "Jaipur" },
-    { id: 4, name: "Vikas", email: 'vikas75@gmail.com', phone: 9087654321, city: "Hyderabad" },
+    { id: 1, name: "Neeraj", email: 'neeraj@gmail.com', phone: "hi", city: "Bangalore" },
+    { id: 2, name: "Raj", email: 'raj@gmail.com', phone: "hi", city: "Chennai" },
+    { id: 3, name: "David", email: 'david342@gmail.com', phone: "hi", city: "Jaipur" },
+    { id: 4, name: "Vikas", email: 'vikas75@gmail.com', phone: "hi", city: "hi" },
 ]
 
 function Admin(props) {
@@ -15,17 +15,15 @@ function Admin(props) {
         { title: "ID", field: "id", editable: false },
         { title: "Name", field: "name" },
         { title: "Email", field: "email" },
-        { title: "Phone Number", field: 'phone', },
-        { title: "City", field: "city", }
+        { title: "Message", field: 'phone', },
     ]
 
 
     return (
         <div className="App">
-            <h1 align="center">React-App</h1>
-            <h4 align='center'>Material Table with CRUD operation</h4>
+            <h1 align="center">Панель Администратора</h1>
             <MaterialTable
-                title="Employee Data"
+                title="Сообщения"
                 data={data}
                 columns={columns}
                 editable={{

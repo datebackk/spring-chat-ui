@@ -6,6 +6,13 @@
   background-color: #29242A;
   font-family: 'Roboto';
 
+  &__error {
+    align-self: flex-start;
+    color: firebrick;
+    font-size: 12px;
+    padding-bottom: 9px;
+  }
+
   &__content {
     display: flex;
     justify-content: center;
