@@ -1,23 +1,52 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import MaterialTable from 'material-table'
+import {fetchUser} from "../store/currentUser/reducers";
+import {deleteAdminMessage, getAdminMessages, updateAdminMessage} from "../util/messageUtil";
+import {message} from "antd";
+import {useDispatch, useSelector} from "react-redux";
 
-const empList = [
-    { id: 1, name: "Neeraj", email: 'neeraj@gmail.com', phone: "hi", city: "Bangalore" },
-    { id: 2, name: "Raj", email: 'raj@gmail.com', phone: "hi", city: "Chennai" },
-    { id: 3, name: "David", email: 'david342@gmail.com', phone: "hi", city: "Jaipur" },
-    { id: 4, name: "Vikas", email: 'vikas75@gmail.com', phone: "hi", city: "hi" },
-]
+// const empList = [
+//     { id: 1, name: "Neeraj", email: 'neeraj@gmail.com', phone: "hi", city: "Bangalore" },
+//     { id: 2, name: "Raj", email: 'raj@gmail.com', phone: "hi", city: "Chennai" },
+//     { id: 3, name: "David", email: 'david342@gmail.com', phone: "hi", city: "Jaipur" },
+//     { id: 4, name: "Vikas", email: 'vikas75@gmail.com', phone: "hi", city: "hi" },
+// ]
 
 function Admin(props) {
 
-    const [data, setData] = useState(empList)
+    const [data, setData] = useState();
+    const dispatch = useDispatch();
+
+    const currentUser = useSelector(state => state.currentUser);
+
     const columns = [
         { title: "ID", field: "id", editable: false },
-        { title: "Name", field: "name" },
-        { title: "Email", field: "email" },
-        { title: "Message", field: 'phone', },
+        { title: "chatID", field: "chatId", editable: false },
+        { title: "senderId", field: "senderId", editable: false },
+        { title: "recipientId", field: 'recipientId', editable: false },
+        { title: "date", field: 'date', editable: false},
+        { title: "message", field: 'message'},
+        { title: "status", field: 'status', editable: false},
     ]
 
+    useEffect(() => {
+        if (localStorage.getItem("accessToken") === null) {
+            props.history.push("/login");
+        }
+        dispatch(fetchUser());
+
+        getAdminMessages()
+            .then(response => {
+                setData(response)
+            })
+            .catch(error => {
+                message.error(error.message);
+            })
+    }, []);
+
+    if (currentUser.roles[0].name !== "ADMIN") {
+        props.history.push("/")
+    }
 
     return (
         <div className="App">
@@ -27,30 +56,39 @@ function Admin(props) {
                 data={data}
                 columns={columns}
                 editable={{
-                    onRowAdd: (newRow) => new Promise((resolve, reject) => {
-                        const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
-                        setTimeout(() => {
-                            setData(updatedRows)
-                            resolve()
-                        }, 2000)
-                    }),
                     onRowDelete: selectedRow => new Promise((resolve, reject) => {
                         const index = selectedRow.tableData.id;
                         const updatedRows = [...data]
                         updatedRows.splice(index, 1)
-                        setTimeout(() => {
-                            setData(updatedRows)
-                            resolve()
-                        }, 2000)
+
+                        deleteAdminMessage(selectedRow)
+                            .then(() => {
+                                setData(updatedRows)
+                                resolve()
+                            })
+                            .catch(error => {
+                                if (error.message == "Unexpected end of JSON input") {
+                                    setData(updatedRows)
+                                    resolve()
+                                } else {
+                                    message.error(error.message);
+                                    reject()
+                                }
+                            })
                     }),
                     onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
                         const index=oldRow.tableData.id;
                         const updatedRows=[...data]
                         updatedRows[index]=updatedRow
-                        setTimeout(() => {
-                            setData(updatedRows)
-                            resolve()
-                        }, 2000)
+                        updateAdminMessage(updatedRow)
+                            .then(response => {
+                                setData(updatedRows)
+                                resolve()
+                            })
+                            .catch(error => {
+                                message.error(error.message);
+                                reject()
+                            })
                     })
 
                 }}

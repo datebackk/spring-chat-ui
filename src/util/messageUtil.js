@@ -37,3 +37,27 @@ export function updateMessage(message) {
         body: JSON.stringify(message)
     });
 }
+
+
+export function getAdminMessages() {
+    return request({
+        url: CHAT_SERVICE + "/messages",
+        method: "GET",
+    });
+}
+
+export function updateAdminMessage(message) {
+    return request({
+        url: CHAT_SERVICE + "/messages/" + message.id,
+        method: "PUT",
+        body: JSON.stringify(message)
+    });
+}
+
+export function deleteAdminMessage(message) {
+    return request({
+        url: CHAT_SERVICE + "/messages/" + message.id,
+        method: "DELETE",
+        body: JSON.stringify(message)
+    });
+}
