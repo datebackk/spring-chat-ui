@@ -51,17 +51,27 @@ const MessageForm = (props) => {
             const newMessage = {
                 chatId: currentDialog.details.chatId,
                 senderId: currentUser.id,
-                recipientId: currentDialog.details.sender.id === currentUser.id ? currentDialog.details.recipient.id : currentDialog.details.sender.id,
+                recipientId: currentDialog.details.chatId === 'public' ? null : currentDialog.details.sender.id === currentUser.id ? currentDialog.details.recipient.id : currentDialog.details.sender.id,
                 message: message.message,
                 date: moment.utc().format('DD.MM.YYYY HH:mm:ss'),
                 status: "SENT"
             }
+
+
             sendNewMessage(newMessage)
                 .then((response) => {
-                    stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(response))
-                    dispatch(addMessage(response));
-                    console.log(response)
-                    dispatch(softUpdate(currentDialog.details, response));
+                    if (currentDialog.details.chatId !== 'public') {
+                        stompClient.send("/app/chat/" + newMessage.recipientId, {}, JSON.stringify(response))
+                        dispatch(addMessage(response));
+                        console.log(response)
+                        dispatch(softUpdate(currentDialog.details, response));
+                    } else {
+                        stompClient.send("/app/public", {}, JSON.stringify(response))
+                        dispatch(addMessage(response));
+                        console.log(response)
+                        dispatch(softUpdate(currentDialog.details, response));
+                    }
+
                 })
                 .catch((error) => {
                     console.log(error);

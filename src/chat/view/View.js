@@ -17,6 +17,7 @@ const View = (props) => {
 
     useEffect(() => {
         if (currentDialog.action === "UPDATE") {
+            console.log(currentDialog)
             loadChatMessages();
         } else {
             dispatch(setMessages([]))
@@ -26,6 +27,7 @@ const View = (props) => {
     const loadChatMessages = () => {
         getChatMessages(currentDialog.details.chatId)
             .then((response) => {
+                console.log(currentDialog.details.chatId, response)
                 dispatch(setMessages(response));
             })
             .catch((error) => {
@@ -41,7 +43,7 @@ const View = (props) => {
                     {Object.keys(currentDialog.details).length !== 0 ? <Header /> : null}
 
 
-                        <ScrollableFeed className={"chat__messages container"}>
+                        <ScrollableFeed className={"chat__messages container style-1"}>
                             {currentDialogMessages.map((item, key) => <Message key={key} messageDetails={item}/>)}
                         </ScrollableFeed>
 

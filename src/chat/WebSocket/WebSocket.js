@@ -26,8 +26,13 @@ const WebSocket = (props) => {
 
     const onConnected = () => {
         console.log("connected");
-        stompClient.subscribe("/topic/messages/" + currentUser.id, onMessageReceived);
-        stompClient.subscribe("/topic/messages-status/" + currentUser.id, onMessageUpdate);
+        if (currentUser.id) {
+            stompClient.subscribe("/topic/messages/" + currentUser.id, onMessageReceived);
+            stompClient.subscribe("/topic/messages-status/" + currentUser.id, onMessageUpdate);
+            stompClient.subscribe("/topic/public", onMessageReceived);
+        } else {
+            window.location('/');
+        }
     };
 
     const onMessageReceived = (msg) => {
@@ -69,8 +74,9 @@ const WebSocket = (props) => {
 
     }
 
-    const onError = (err) => {
-        console.log(err);
+    const onError = (error) => {
+        message.error(error);
+        console.log(error);
     };
 
     return null;

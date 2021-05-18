@@ -27,10 +27,12 @@ const Message = ({messageDetails}) => {
 
     let messageClass = ['message'];
     let badgeClass = ['message-badge'];
-    let userImg = USER_IMG_PATH + currentDialog.details.sender.userImg;
+    let userImg = currentDialog.details.chatId === "public" ? USER_IMG_PATH + 'default.png' : null;
     if (messageDetails.senderId === currentUser.id) {
         messageClass.push('message--right');
         userImg = USER_IMG_PATH + currentUser.userImg;
+    } else if (!userImg) {
+        userImg = currentDialog.details.sender.id === currentUser.id ? USER_IMG_PATH + currentDialog.details.recipient.userImg : USER_IMG_PATH + currentDialog.details.sender.userImg
     }
 
     if (messageDetails.status === "SENT" && messageDetails.senderId === currentUser.id) {

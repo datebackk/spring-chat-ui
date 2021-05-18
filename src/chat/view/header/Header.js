@@ -11,7 +11,10 @@ const Header = (props) => {
 
     let title;
     let userImg;
-    if (currentDialog.details.sender.id === currentUser.id) {
+
+    if (currentDialog.details.chatId === 'public') {
+        title = <h6>Общий чат</h6>
+    } else if (currentDialog.details.sender.id === currentUser.id) {
         title = <h6>{currentDialog.details.recipient.nickname}</h6>
         userImg = USER_IMG_PATH + currentDialog.details.recipient.userImg
     } else {
