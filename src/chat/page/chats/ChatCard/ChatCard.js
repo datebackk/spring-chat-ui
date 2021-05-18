@@ -25,12 +25,16 @@ const ChatCard = ({cardDetails}) => {
 
     let title;
     let userImg;
-    if (cardDetails.sender.id === currentUser.id) {
+    if (cardDetails.chatId === 'public') {
+        title = <h6>Общий чат</h6>
+    } else if (cardDetails.sender.id === currentUser.id) {
         title = <h6>{cardDetails.recipient.nickname}</h6>
         userImg = USER_IMG_PATH + cardDetails.recipient.userImg
-    } else {
+    } else if (cardDetails.recipient.id === currentUser.id) {
         title = <h6>{cardDetails.sender.nickname}</h6>
         userImg = USER_IMG_PATH + cardDetails.sender.userImg
+    } else {
+        title = <h6>Общий чат</h6>
     }
 
     let badgeClass = ['card-badge']
@@ -47,13 +51,13 @@ const ChatCard = ({cardDetails}) => {
             <div className="chat-card__body">
                 <div className="chat-card__content">
                     <div className="chat-card__avatar">
-                        <img className="chat-card__avatar-img" src={userImg} alt="avatar"/>
+                        {cardDetails.chatId === 'public' ? null : <img className="chat-card__avatar-img" src={userImg} alt="avatar"/>}
                     </div>
                     <div className="chat-card__media">
                         <div className="chat-card__title">
                             {title}
                             {/*<p>{cardDetails.lastMessage?.date}</p>*/}
-                            <p>{moment.utc(cardDetails.lastMessage?.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()}</p>
+                            <p>{cardDetails.chatId === 'public' ? null : moment.utc(cardDetails.lastMessage?.date, 'DD.MM.YYYY hh:mm:ss').local().startOf('minutes').fromNow()}</p>
 
                         </div>
                         <div className="chat-card__text">

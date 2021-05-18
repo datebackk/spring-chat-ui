@@ -4,7 +4,9 @@ import SockJS from "sockjs-client";
 import {newStompclient} from "../../store/stomClient/reducers";
 import {addMessage, updateMessageStatus} from "../../store/page/chats/messages/actions";
 import {store} from "../../store/store";
-import {softUpdate, strongUpdate} from "../../store/page/chats/actions";
+import {addChat, setChats, softUpdate, strongUpdate} from "../../store/page/chats/actions";
+import {getUserChats} from "../../util/chatsUttil";
+import {message} from "antd";
 
 
 const WebSocket = (props) => {
@@ -31,8 +33,22 @@ const WebSocket = (props) => {
     const onMessageReceived = (msg) => {
         const currentDialog = store.getState().view;
         const chats = store.getState().chats;
+        console.log(msg.body)
         const incomingMessage = JSON.parse(msg.body)
-        const currentChat = chats.filter((item) => item.chatId === incomingMessage.chatId);
+        let currentChat = chats.filter((item) => item.chatId === incomingMessage.chatId);
+
+        if (currentChat.length === 0) {
+            getUserChats()
+                .then(response => {
+                currentChat = response.filter((item) => item.chatId === incomingMessage.chatId)
+                dispatch(setChats(response))
+                    return
+            })
+            .catch(error => {
+                message.error(error.message);
+            })
+            return
+        }
 
         if (currentDialog.details.chatId === incomingMessage.chatId) {
             if (currentChat.length !== 0) {

@@ -7,7 +7,6 @@ import {changeActiveTab} from "../../../../store/navbar/actions";
 import {USER_IMG_PATH} from "../../../../util/userUtil";
 
 const UserCard = ({user}) => {
-    console.log(user);
 
     const currentUser = useSelector(state => state.currentUser)
     const currentDialog = useSelector(state => state.view);

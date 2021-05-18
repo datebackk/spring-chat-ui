@@ -28,7 +28,6 @@ const Chats = (props) => {
     return (
         <div>
             <h2 className="page__title">Чаты</h2>
-            <Test/>
             {userChats.length !== 0 ? (userChats.map((item, key) => <ChatCard key={key} cardDetails={item} />)) : (<h1>У вас нет диалогов</h1>)}
         </div>
     );

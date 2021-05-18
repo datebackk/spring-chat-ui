@@ -1,4 +1,4 @@
-import {SET_CHATS, SOFT_UPDATE, STRONG_UPDATE, UPDATE_CHATS} from "./actions";
+import {ADD_CHAT, SET_CHATS, SOFT_UPDATE, STRONG_UPDATE, UPDATE_CHATS} from "./actions";
 
 let defaultState = [];
 
@@ -30,6 +30,9 @@ export const chatsReducer = (state = defaultState, action) => {
 
         case SOFT_UPDATE:
             return softUpdate(action.payload);
+
+        case ADD_CHAT:
+            return state.push(action.payload)
 
         default:
             return state;
