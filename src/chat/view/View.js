@@ -22,7 +22,7 @@ const View = (props) => {
         } else {
             dispatch(setMessages([]))
         }
-    }, [currentDialog]);
+    }, [currentDialog.details]);
 
     const loadChatMessages = () => {
         getChatMessages(currentDialog.details.chatId)

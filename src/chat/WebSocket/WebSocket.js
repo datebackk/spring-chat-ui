@@ -36,23 +36,28 @@ const WebSocket = (props) => {
     };
 
     const onMessageReceived = (msg) => {
+        const currentUser = store.getState().currentUser;
         const currentDialog = store.getState().view;
         const chats = store.getState().chats;
         console.log(msg.body)
         const incomingMessage = JSON.parse(msg.body)
         let currentChat = chats.filter((item) => item.chatId === incomingMessage.chatId);
 
+        if (incomingMessage.senderId === currentUser.id && currentDialog.details.chatId === 'public') {
+            dispatch(softUpdate(currentChat[0], incomingMessage))
+            return;
+        }
+
         if (currentChat.length === 0) {
             getUserChats()
                 .then(response => {
                 currentChat = response.filter((item) => item.chatId === incomingMessage.chatId)
                 dispatch(setChats(response))
-                    return
             })
             .catch(error => {
                 message.error(error.message);
             })
-            return
+            return;
         }
 
         if (currentDialog.details.chatId === incomingMessage.chatId) {
